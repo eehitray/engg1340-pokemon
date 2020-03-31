@@ -6,7 +6,7 @@
 
 struct Move 
 {
-	string name;
+	std::string name;
 	int damage;	//loss of health the move causes to opponent
 	double hit;	//probability of move being successful
 };
