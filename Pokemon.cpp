@@ -19,7 +19,7 @@ std::string Pokemon::getName()
 	return name;		
 }
 
-int Pokemon::getType()
+char Pokemon::getType()
 {
 	return type;
 }
@@ -37,6 +37,38 @@ int Pokemon::getHP()
 int Pokemon::getLevel()
 {
 	return level;
+}
+
+std::vector<Move> getFinalDamage(std::vector<Move> mvset, char t)
+{
+	if(type=='F')
+	{
+		if(t=='W')
+			for(int i=0;i<3;i++)
+				mvset[i].damage -=1;
+		else if(t=='G')
+			for(int i=0;i<3;i++)
+				mvset[i].damage +=1;
+	}
+	else if(type=='W')
+	{
+		if(t=='F')
+			for(int i=0;i<3;i++)
+				mvset[i].damage +=1;
+		else if(t=='G')
+			for(int i=0;i<3;i++)
+				mvset[i].damage -=1;
+	}
+	else
+	{
+		if(t=='F')
+			for(int i=0;i<3;i++)
+				mvset[i].damage -=1;
+		else if(t=='W')
+			for(int i=0;i<3;i++)
+				mvset[i].damage +=1;
+	}
+	return mvset;
 }
 
 std::vector<Move> Pokemon::getMoveset()

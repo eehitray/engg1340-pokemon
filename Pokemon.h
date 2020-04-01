@@ -19,10 +19,11 @@ class Pokemon
 	public:
 	Pokemon(std::string n, char t, int lvl, std::vector<Move> mvset);
 	std::string getName();
-	int getType();
+	char getType();
 	int getMaxHP();
 	int getHP();
 	int getLevel();
+	std::vector<Move> getFinalDamage(std::vector<Move> mvset, char t);
 	std::vector<Move> getMoveset();
 	void setName(std::string n);
 	void setHP(int HP);
