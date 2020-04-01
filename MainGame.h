@@ -2,12 +2,13 @@
 #define MAIN_GAME
 
 #include "Pokemon.h"
+#include "ScreenRenderer.h"
 
-class MainGame() {
+class MainGame {
 
 	public:
 		void mainGameLoop();
-		void initiateBattle(Pokemon, Pokemon);
+		void initiateBattle(Pokemon, Pokemon, ScreenRenderer);
 
 };
 

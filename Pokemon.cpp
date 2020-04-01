@@ -39,7 +39,7 @@ int Pokemon::getLevel()
 	return level;
 }
 
-std::vector<Move> getFinalDamage(std::vector<Move> mvset, char t)
+std::vector<Move> Pokemon::getFinalDamage(std::vector<Move> mvset, char t)
 {
 	if(type=='F')
 	{

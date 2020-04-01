@@ -9,7 +9,7 @@
 
 void MainGame::mainGameLoop() {
 	ScreenRenderer s;
-	string name, inp;
+	std::string name, inp;
 
 	std::vector<Move> playerMoves = {{"Player Move 1", 2, 0.9}, {"Player Move 2", 4, 0.4}};
 	std::vector<Move> oppMoves = {{"Opponent Move 1", 2, 0.9}, {"Opponent Move 2", 4, 0.4}};
@@ -25,7 +25,7 @@ void MainGame::mainGameLoop() {
 
 	inp = s.inputString("");
 
-	if (inp == 'Y') {
+	if (inp == "Y") {
 		s.clearScreen();
 		initiateBattle(player, opponent, s);
 	}
@@ -38,8 +38,8 @@ void MainGame::initiateBattle(Pokemon a, Pokemon b, ScreenRenderer s) {
 	std::vector<Move> oppMoves = b.getFinalDamage(b.getMoveset(), a.getType());
 
 	while (a.getHP() > 0 && b.getHP() > 0) {
-		s.printToScreen("Your HP: " + to_string(a.getHP()));
-		s.printToScreen("Opponent HP: " + to_string(b.getHP()));
+		s.printToScreen("Your HP: " + std::to_string(a.getHP()));
+		s.printToScreen("Opponent HP: " + std::to_string(b.getHP()));
 
 		if (turn % 2 == 0) { //Player turn
 			int moveInd = s.inputInt("Your move (0 or 1): ");
@@ -49,7 +49,7 @@ void MainGame::initiateBattle(Pokemon a, Pokemon b, ScreenRenderer s) {
 			double prob = ((double) rand() / (RAND_MAX));
 
 			if (prob <= mv.hit) {
-				s.printToScreen("You hit using " + mv.name + " for " + to_string(mv.damage) + " HP!");
+				s.printToScreen("You hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
 				b.setHP(b.getHP() - mv.damage);
 			}
 			else s.printToScreen("You missed!");
@@ -62,7 +62,7 @@ void MainGame::initiateBattle(Pokemon a, Pokemon b, ScreenRenderer s) {
 			double prob = ((double) rand() / (RAND_MAX));
 
 			if (prob <= mv.hit) {
-				s.printToScreen("Opponent hit using " + mv.name + " for " + to_string(mv.damage) + " HP!");
+				s.printToScreen("Opponent hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
 				a.setHP(a.getHP() - mv.damage);
 			}
 			else s.printToScreen("Opponent missed!");
