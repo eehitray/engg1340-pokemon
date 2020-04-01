@@ -4,5 +4,11 @@ ScreenRenderer.o: ScreenRenderer.cpp ScreenRenderer.h
 MainGame.o: MainGame.cpp MainGame.h
 	g++ -c $<
 
-game.exe: MainGame.o ScreenRenderer.o
+Pokemon.o: Pokemon.cpp Pokemon.h
+	g++ -c $<
+
+main_test.o: main_test.cpp
+	g++ -c $<
+
+game.exe: MainGame.o ScreenRenderer.o Pokemon.o main_test.o
 	g++ $^ -o $@
