@@ -3,6 +3,10 @@
 
 #include "ScreenRenderer.h"
 
+void ScreenRenderer::clearScreen() {
+	std::cout << "\033[2J\033[1;1H";
+}
+
 void ScreenRenderer::printToScreen(std::string s) {
 	std::cout << s << std::endl;
 }
