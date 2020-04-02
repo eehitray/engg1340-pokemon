@@ -5,7 +5,8 @@
 
 #include<vector>
 #include<string>
-#include "Move.h"
+
+struct Move;
 
 class Pokemon
 {
