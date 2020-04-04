@@ -84,6 +84,8 @@ void Pokemon::setName(std::string n)
 void Pokemon::setHP(int HP)
 {
 	hp = HP;
+
+	if (hp < 0) hp = 0;
 }
 
 void Pokemon::setLevel(int lvl)
