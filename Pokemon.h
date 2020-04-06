@@ -23,7 +23,7 @@ class Pokemon
 	int getMaxHP();
 	int getHP();
 	int getLevel();
-	std::vector<Move> getFinalDamage(std::vector<Move> mvset, char t);
+	std::vector<Move> getFinalDamage(char t);
 	std::vector<Move> getMoveset();
 	void setName(std::string n);
 	void setHP(int HP);
