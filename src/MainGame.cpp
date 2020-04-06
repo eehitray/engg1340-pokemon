@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include <sstream>
+#include <ctime>
 
 #include "MainGame.h"
 #include "ScreenRenderer.h"
@@ -12,6 +13,7 @@
 #include "Player.h"
 
 void MainGame::mainGameLoop() {
+	srand(time(NULL));
 	ScreenRenderer s;
 	std::string name, inp;
 
@@ -48,33 +50,34 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 	Pokemon *curPlayerPokemon = &playerRoster[0];
 	Pokemon *curOppPokemon = &oppRoster[0];
 
-	std::vector<Move> curPlayerMoves = curPlayerPokemon -> getMoveset();
-	std::vector<Move> curOppMoves = curOppPokemon -> getMoveset();
+	std::vector<Move> curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
+	std::vector<Move> curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 
 
 	while (a.hasAlivePokemon() && b.hasAlivePokemon()) {
 		s.printToScreen("Your current Pokemon: ");
-		curPlayerPokemon -> printDetails();
+		curPlayerPokemon -> printDetails(s, true);
 
 		s.printToScreen("Your details: ");
-		a.printDetails();
+		a.printDetails(s);
 
 		s.printToScreen("Opponent's current Pokemon: ");
-		curOppPokemon -> printDetails();
+		curOppPokemon -> printDetails(s, false);
 
 		if (turn % 2 == 0) { //Player turn
 			if (curPlayerPokemon -> getHP() == 0) { //Switch pokemon
 				s.printToScreen("Oh no! Your Pokemon fainted! Choose a new Pokemon: ");
 
-				for (i = 0; i < playerRoster.length(); i++) {
-					if (i != curPlayerPokemonIndex) {
-						s.printToScreen(std::to_string(i) + ": " + playerRoster[i].getHP());
+				for (i = 0; i < playerRoster.size(); i++) {
+					if (i != curPlayerPokemonIndex && playerRoster[i].getHP() != 0) {
+						s.printToScreen(std::to_string(i) + ": " + playerRoster[i].getName());
 					}
 				}
 
 				curPlayerPokemonIndex = s.inputInt("Your Pokemon choice: ");
 				curPlayerPokemon = &playerRoster[curPlayerPokemonIndex];
-				curPlayerMoves = curPlayerPokemon -> getMoveset();
+				curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
+				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 			}
 			else {
 				moveInd = s.inputInt("Your move: ");
@@ -95,13 +98,14 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 				s.printToScreen("The opponent's pokemon fainted!");
 
 				curOppPokemon = &oppRoster[++curOppPokemonIndex];
-				curOppMoves = curOppPokemon -> getMoveset();
+				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
+				curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
 
 				s.printToScreen("The opponent switches to " + curOppPokemon -> getName() + "!");
 
 			}
 			else {
-				mv = curOppMoves[rand() % curOppMoves.length()];
+				mv = curOppMoves[rand() % curOppMoves.size()];
 
 				prob = ((double) rand() / (RAND_MAX));
 
@@ -130,32 +134,31 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 }
 
 std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) {
-	ifstream in;
-	in.open("PokemonList.txt");
+	std::ifstream in;
+	in.open("poklist_twomoves.txt");
 
 	std::vector<Pokemon> full_list, return_list;
 
-	string s;
+	std::string s;
 
-	string name;
+	std::string name;
 	char type;
 
-	string mv1_name, mv1_dmg, mv1_hit;
-	string mv2_name, mv2_dmg, mv2_hit;
+	std::string mv1_name;
+	std::string mv2_name;
 
 	while (getline(in, s)) {
-		istringstream st(s);
+		std::istringstream st(s);
 
 		st >> name >> type 
-		   >> mv1_name >> mv1_dmg >> mv1_hit
-		   >> mv2_name >> mv2_dmg >> mv2_hit;
+		   >> mv1_name >> mv2_name;
 
-		full_list.push_back(Pokemon(name, type, 1, {{mv1_name, mv1_dmg, mv1_hit}, {mv2_name, mv2_dmg, mv2_hit}}));
+		full_list.push_back(Pokemon(name, type, 1, {mv1_name, mv2_name}));
 	}
 
 	random_shuffle(full_list.begin(), full_list.end());
 
-	for (int i = 0; i < levels.length(); i++) {
+	for (int i = 0; i < levels.size(); i++) {
 		full_list[i].setLevel(levels[i]);
 		return_list.push_back(full_list[i]);
 	}
