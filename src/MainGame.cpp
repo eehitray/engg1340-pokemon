@@ -66,9 +66,9 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 			if (curPlayerPokemon -> getHP() == 0) { //Switch pokemon
 				s.printToScreen("Oh no! Your Pokemon fainted! Choose a new Pokemon: ");
 
-				for (i = 0; i < playerRoster.length(); i++) {
+				for (i = 0; i < playerRoster.size(); i++) {
 					if (i != curPlayerPokemonIndex) {
-						s.printToScreen(std::to_string(i) + ": " + playerRoster[i].getHP());
+						s.printToScreen(std::to_string(i) + ": " + std::to_string(playerRoster[i].getHP()));
 					}
 				}
 
@@ -101,7 +101,7 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 
 			}
 			else {
-				mv = curOppMoves[rand() % curOppMoves.length()];
+				mv = curOppMoves[rand() % curOppMoves.size()];
 
 				prob = ((double) rand() / (RAND_MAX));
 
@@ -130,32 +130,31 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 }
 
 std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) {
-	ifstream in;
-	in.open("PokemonList.txt");
+	std::ifstream in;
+	in.open("poklist_twomoves.txt");
 
 	std::vector<Pokemon> full_list, return_list;
 
-	string s;
+	std::string s;
 
-	string name;
+	std::string name;
 	char type;
 
-	string mv1_name, mv1_dmg, mv1_hit;
-	string mv2_name, mv2_dmg, mv2_hit;
+	std::string mv1_name;
+	std::string mv2_name;
 
 	while (getline(in, s)) {
-		istringstream st(s);
+		std::istringstream st(s);
 
 		st >> name >> type 
-		   >> mv1_name >> mv1_dmg >> mv1_hit
-		   >> mv2_name >> mv2_dmg >> mv2_hit;
+		   >> mv1_name >> mv2_name;
 
-		full_list.push_back(Pokemon(name, type, 1, {{mv1_name, mv1_dmg, mv1_hit}, {mv2_name, mv2_dmg, mv2_hit}}));
+		full_list.push_back(Pokemon(name, type, 1, {mv1_name, mv2_name}));
 	}
 
 	random_shuffle(full_list.begin(), full_list.end());
 
-	for (int i = 0; i < levels.length(); i++) {
+	for (int i = 0; i < levels.size(); i++) {
 		full_list[i].setLevel(levels[i]);
 		return_list.push_back(full_list[i]);
 	}

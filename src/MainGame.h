@@ -4,14 +4,15 @@
 #include <vector>
 
 class Pokemon;
+class Player;
 class ScreenRenderer;
 
 class MainGame {
 
 	public:
 		void mainGameLoop();
-		void initiateBattle(Pokemon, Pokemon, ScreenRenderer);
-		void generateRandomSelection(std::vector<int>);
+		void initiateBattle(Player, Player, ScreenRenderer);
+		std::vector<Pokemon> generateRandomSelection(std::vector<int>);
 
 };
 
