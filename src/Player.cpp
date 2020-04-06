@@ -54,6 +54,6 @@ void Player::printDetails(ScreenRenderer S)
 	S.printToScreen(pname);
 	for(int i=0;i<roster.size();i++)
 	{
-		roster[i].printDetails(S);
+		roster[i].printDetails(S, true);
 	}
 }

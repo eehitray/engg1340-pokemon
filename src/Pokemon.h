@@ -30,7 +30,7 @@ class Pokemon
 	void setName(std::string n);
 	void setHP(int HP);
 	void setLevel(int lvl);
-	void printDetails(ScreenRenderer S);
+	void printDetails(ScreenRenderer S, bool printMoves);
 };
 
 #endif

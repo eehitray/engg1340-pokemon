@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include <sstream>
+#include <ctime>
 
 #include "MainGame.h"
 #include "ScreenRenderer.h"
@@ -12,6 +13,7 @@
 #include "Player.h"
 
 void MainGame::mainGameLoop() {
+	srand(time(NULL));
 	ScreenRenderer s;
 	std::string name, inp;
 
@@ -48,33 +50,34 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 	Pokemon *curPlayerPokemon = &playerRoster[0];
 	Pokemon *curOppPokemon = &oppRoster[0];
 
-	std::vector<Move> curPlayerMoves = curPlayerPokemon -> getMoveset();
-	std::vector<Move> curOppMoves = curOppPokemon -> getMoveset();
+	std::vector<Move> curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
+	std::vector<Move> curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 
 
 	while (a.hasAlivePokemon() && b.hasAlivePokemon()) {
 		s.printToScreen("Your current Pokemon: ");
-		curPlayerPokemon -> printDetails(s);
+		curPlayerPokemon -> printDetails(s, true);
 
 		s.printToScreen("Your details: ");
 		a.printDetails(s);
 
 		s.printToScreen("Opponent's current Pokemon: ");
-		curOppPokemon -> printDetails(s);
+		curOppPokemon -> printDetails(s, false);
 
 		if (turn % 2 == 0) { //Player turn
 			if (curPlayerPokemon -> getHP() == 0) { //Switch pokemon
 				s.printToScreen("Oh no! Your Pokemon fainted! Choose a new Pokemon: ");
 
 				for (i = 0; i < playerRoster.size(); i++) {
-					if (i != curPlayerPokemonIndex) {
-						s.printToScreen(std::to_string(i) + ": " + std::to_string(playerRoster[i].getHP()));
+					if (i != curPlayerPokemonIndex && playerRoster[i].getHP() != 0) {
+						s.printToScreen(std::to_string(i) + ": " + playerRoster[i].getName());
 					}
 				}
 
 				curPlayerPokemonIndex = s.inputInt("Your Pokemon choice: ");
 				curPlayerPokemon = &playerRoster[curPlayerPokemonIndex];
-				curPlayerMoves = curPlayerPokemon -> getMoveset();
+				curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
+				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 			}
 			else {
 				moveInd = s.inputInt("Your move: ");
@@ -95,7 +98,8 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 				s.printToScreen("The opponent's pokemon fainted!");
 
 				curOppPokemon = &oppRoster[++curOppPokemonIndex];
-				curOppMoves = curOppPokemon -> getMoveset();
+				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
+				curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
 
 				s.printToScreen("The opponent switches to " + curOppPokemon -> getName() + "!");
 

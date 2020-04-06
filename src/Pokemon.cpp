@@ -13,7 +13,7 @@ Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<std::string> string
 	maxhp = lvl*10;
 	hp = maxhp;
 	moveset.push_back({stringset[0],3,1});
-	moveset.push_back({stringset[1],5,0.8});
+	moveset.push_back({stringset[1],5,0.5});
 	//add command for 3rd move here
 }
 
@@ -96,16 +96,23 @@ void Pokemon::setLevel(int lvl)
 {
 	level = lvl;
 	maxhp = level*10;
-	moveset[0].damage +=3;
-	moveset[1].damage +=5;
-	moveset[2].damage +=7;
+	hp = maxhp;
+	moveset[0].damage += (level - 1) * 3;
+	moveset[1].damage += (level - 1) * 5;
+	//moveset[2].damage +=7;
 }
 
-void Pokemon::printDetails(ScreenRenderer S)
+void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
 {
 	S.printToScreen(name);
-	for(int i=0;i<moveset.size();i++)
-	{
-		S.printToScreen(moveset[i].name + " " + std::to_string(moveset[i].damage));
+	S.printToScreen("Level: " + std::to_string(level));
+	S.printToScreen("HP: " + std::to_string(hp));
+	if (printMoves) {
+		for(int i=0;i<moveset.size();i++)
+		{
+			S.printToScreen(moveset[i].name + " - Damage: " + std::to_string(moveset[i].damage));
+		}
 	}
+
+	S.printToScreen("");
 }
