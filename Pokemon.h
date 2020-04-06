@@ -6,6 +6,7 @@
 #include<vector>
 #include<string>
 #include "Move.h"
+#include "ScreenRenderer.h"
 
 class Pokemon
 {
@@ -17,7 +18,7 @@ class Pokemon
 	std::vector<Move> moveset;
 
 	public:
-	Pokemon(std::string n, char t, int lvl, std::vector<Move> mvset);
+	Pokemon(std::string n, char t, int lvl, std::vector<string> stringset);
 	std::string getName();
 	char getType();
 	int getMaxHP();
@@ -28,6 +29,7 @@ class Pokemon
 	void setName(std::string n);
 	void setHP(int HP);
 	void setLevel(int lvl);
+	void printDetails(ScreenRenderer S);
 };
 
 #endif

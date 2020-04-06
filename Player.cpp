@@ -46,3 +46,12 @@ bool Player::hasAlivePokemon()
 	}
 	return false;
 }
+
+void Player::printDetails(ScreeenRenderer S)
+{
+	S.printToScreen(pname);
+	for(int i=0;i<roster.size();i++)
+	{
+		roster[i].printDetails();
+	}
+}

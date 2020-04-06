@@ -5,13 +5,15 @@
 #include "Pokemon.h"
 #include<vector>
 
-Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<Move> mvset)
+Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<string> stringset)
 {	name = n;
 	type = t;
 	level = lvl;
 	maxhp = lvl*10;
 	hp = maxhp;
-	moveset = mvset;
+	moveset.push_back({stringset[0],3,1});
+	moveset.push_back({stringset[1],5,0.8});
+	//add command for 3rd move here
 }
 
 std::string Pokemon::getName()
@@ -39,7 +41,7 @@ int Pokemon::getLevel()
 	return level;
 }
 
-std::vector<Move> getFinalDamage(char t)
+std::vector<Move> Pokemon::getFinalDamage(char t)
 {
 	std::vector<Move> mvset = moveset;
 	if(type=='F')
@@ -96,3 +98,11 @@ void Pokemon::setLevel(int lvl)
 	moveset[2].damage +=7;
 }
 
+void Pokemon::printDetails(ScreenRenderer S)
+{
+	S.printToScreen(name);
+	for(int i=0;i<moveset.size();i++)
+	{
+		S.printToScreen(moveset[i].name + " " + std::to_string(move[i].damage);
+	}
+}
