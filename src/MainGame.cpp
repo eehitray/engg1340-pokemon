@@ -115,6 +115,9 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 
 		turn++;
 
+		a.setRoster(playerRoster);
+		b.setRoster(oppRoster);
+
 		s.inputInt("");
 
 		s.clearScreen();
