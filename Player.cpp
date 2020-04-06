@@ -12,22 +12,37 @@ Player::Player(std::string n, std::vector<Pokemon> pok)
 	roster = pok;
 }
 
-std::string getPname()
+std::string Player::getPname()
 {
 	return pname;
 }
 
-std::vector<Pokemon> getRoster()
+std::vector<Pokemon> Player::getRoster()
 {
 	return roster;
 }
 
-void setPname(std::string n)
+void Player::setPname(std::string n)
 {
-	panme = n;
+	pname = n;
 }
 
-void addtoRoster(Pokemon pok)
+void Player::addtoRoster(Pokemon pok)
 {
 	roster.push_back(pok);
+}
+
+void Player::setRoster(std::vector<Pokemon> ros)
+{
+	roster = ros;
+}
+
+int Player::pokHealth()
+{
+	for(int i=0;i<3;i++)
+	{
+		if(roster[i].getHP() != 0)
+			return 1;
+	}
+	return 0;
 }

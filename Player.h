@@ -18,6 +18,8 @@ class Player
 	std::vector<Pokemon> getRoster();
 	void setPname(std::string n);
 	void addtoRoster(Pokemon pok);
+	void setRoster(std::vector<Pokemon> ros);
+	int pokHealth();
 };
 
 #endif
