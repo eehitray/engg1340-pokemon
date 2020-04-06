@@ -54,13 +54,13 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 
 	while (a.hasAlivePokemon() && b.hasAlivePokemon()) {
 		s.printToScreen("Your current Pokemon: ");
-		curPlayerPokemon -> printDetails();
+		curPlayerPokemon -> printDetails(s);
 
 		s.printToScreen("Your details: ");
-		a.printDetails();
+		a.printDetails(s);
 
 		s.printToScreen("Opponent's current Pokemon: ");
-		curOppPokemon -> printDetails();
+		curOppPokemon -> printDetails(s);
 
 		if (turn % 2 == 0) { //Player turn
 			if (curPlayerPokemon -> getHP() == 0) { //Switch pokemon
