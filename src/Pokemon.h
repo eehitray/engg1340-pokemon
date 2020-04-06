@@ -5,7 +5,9 @@
 
 #include<vector>
 #include<string>
-#include "Move.h"
+
+struct Move;
+class ScreenRenderer;
 
 class Pokemon
 {
@@ -17,17 +19,18 @@ class Pokemon
 	std::vector<Move> moveset;
 
 	public:
-	Pokemon(std::string n, char t, int lvl, std::vector<Move> mvset);
+	Pokemon(std::string n, char t, int lvl, std::vector<std::string> stringset);
 	std::string getName();
 	char getType();
 	int getMaxHP();
 	int getHP();
 	int getLevel();
-	std::vector<Move> getFinalDamage(std::vector<Move> mvset, char t);
+	std::vector<Move> getFinalDamage(char t);
 	std::vector<Move> getMoveset();
 	void setName(std::string n);
 	void setHP(int HP);
 	void setLevel(int lvl);
+	void printDetails(ScreenRenderer S, bool printMoves);
 };
 
 #endif
