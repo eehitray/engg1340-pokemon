@@ -37,12 +37,12 @@ void Player::setRoster(std::vector<Pokemon> ros)
 	roster = ros;
 }
 
-int Player::pokHealth()
+bool Player::hasAlivePokemon()
 {
-	for(int i=0;i<3;i++)
+	for(int i=0;i<roster.size();i++)
 	{
 		if(roster[i].getHP() != 0)
-			return 1;
+			return true;
 	}
-	return 0;
+	return false;
 }

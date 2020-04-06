@@ -45,28 +45,28 @@ std::vector<Move> getFinalDamage(char t)
 	if(type=='F')
 	{
 		if(t=='W')
-			for(int i=0;i<3;i++)
+			for(int i=0;i<mvset.size();i++)
 				mvset[i].damage -=1;
 		else if(t=='G')
-			for(int i=0;i<3;i++)
+			for(int i=0;i<mvset.size();i++)
 				mvset[i].damage +=1;
 	}
 	else if(type=='W')
 	{
 		if(t=='F')
-			for(int i=0;i<3;i++)
+			for(int i=0;i<mvset.size();i++)
 				mvset[i].damage +=1;
 		else if(t=='G')
-			for(int i=0;i<3;i++)
+			for(int i=0;i<mvset.size();i++)
 				mvset[i].damage -=1;
 	}
 	else
 	{
 		if(t=='F')
-			for(int i=0;i<3;i++)
+			for(int i=0;i<mvset.size();i++)
 				mvset[i].damage -=1;
 		else if(t=='W')
-			for(int i=0;i<3;i++)
+			for(int i=0;i<mvset.size();i++)
 				mvset[i].damage +=1;
 	}
 	return mvset;

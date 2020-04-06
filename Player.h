@@ -19,7 +19,7 @@ class Player
 	void setPname(std::string n);
 	void addtoRoster(Pokemon pok);
 	void setRoster(std::vector<Pokemon> ros);
-	int pokHealth();
+	bool hasAlivePokemon();
 };
 
 #endif
