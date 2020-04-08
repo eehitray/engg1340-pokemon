@@ -4,7 +4,7 @@
 ### Eehit Ray - 3035665122
 ### Dhruv Aggarwal - 3035663150
 
-Our version of **Pokémon** is a text-based game, where the user's goal is to become the regional Pokemon Champion.
+Our version of **Pokémon** is a text-based game, where the user's goal is to become the regional Pokémon Champion.
 The game is based on the famous anime/game Pokémon.
 The player begins the game with 3 pokémon, and travels through the map, battling other trainers, exploring the new world and fighting pokémon so as to train and level up his/her own Pokémon. He ultimtely battles out the region's champion for the coveted position of Pokémon Champion.
 
@@ -13,7 +13,7 @@ The player begins the game with 3 pokémon, and travels through the map, battlin
 2. The Pokémon begin at level 1. It is level that determines the base damage of the moves (attacks) the pokémon possesses. The player battles other pokémon and trainers to gain experience points and level up his own pokémon, so that they become stonger.
 3. As you progress through the map, the level of difficulty increases with stronger pokémon appearing. Within the map you will encounter grass areas where you will have battles with random wild pokémon and also encounter other trainers.
 4. In the battle system :
-	- The player sees his Pokémon and their respective moves, HP (health points), type & level, as well his opponent's pokemon and their HP, type & level.  
+	- The player sees his Pokémon and their respective moves, HP (health points), type & level, as well his opponent's pokémon and their HP, type & level.  
 	- The player has his current Pokémon selected and he can then choose a move to execute.
 	- The effectiveness of the move depends on your Pokémon's level, type and the type of Pokémon being battled. E.g.: Fire types are stronger than Grass types. 
 	- The probability of the move hitting decreases as the strength of the move increases.
@@ -22,7 +22,7 @@ The player begins the game with 3 pokémon, and travels through the map, battlin
 	- wild Pokémon appear individually, and trainers have a set of 3 Pokémon each. 
 	- The battle ends when either party has all Pokémon at HP 0.
 	- Note: You can switch out your Pokémon during the battle as well.
-5. To heal your hurt Pokémon you can approach Pokemon centres that are located at specific places on the map.
+5. To heal your hurt Pokémon you can approach Pokémon centres that are located at specific places on the map.
 6. You can also check your Pokémon details such as HP, level etc.
 7. The game also includes an optional badge collection system that gives you rewards of extra experience points to your Pokémon, as an incentive to explore all sections of the map.
 8. If you feel like taking a break you can save the game, and retain your current position and Pokémon.
@@ -49,6 +49,6 @@ Notes: We may include features such as evolution and catching Pokémon depending
 	- The map of the game and the player's coordinate are stored in a text file which is read, while printing the map.
 	- While exiting the game, the player's details (including name, roster and map location) are stored in a file, so that the player can carry on from where they left off.
 5. Program codes in multiple files:
-	- The program's code is divided into multiple .cpp and .h files. E.g.: Pokemon.cpp and Pokemon.h
+	- The program's code is divided into multiple .cpp and .h files. E.g.: `Pokemon.cpp` and `Pokemon.h`
 
 **We hope you enjoy the game and become the Pokémon Champion!**
