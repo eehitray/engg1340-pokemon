@@ -15,7 +15,8 @@
 void MainGame::mainGameLoop() {
 	srand(time(NULL));
 	ScreenRenderer s;
-	std::string name, inp;
+	std::string name;
+	char inp;
 
 	s.printToScreen("Welcome to Pokemon!");
 
@@ -24,11 +25,11 @@ void MainGame::mainGameLoop() {
 	Player user(name, generateRandomSelection({1, 1, 2}));
 	Player opponent("David", generateRandomSelection({1, 1, 2}));
 
-	s.printToScreen("Hello " + name + "! Ready to begin? ");
+	s.printToScreen("Hello " + name + "! Ready to begin? (y for yes) ");
 
-	inp = s.inputString("");
+	inp = s.inputCharNoEnter();
 
-	if (inp == "Y") {
+	if (inp == 'y') {
 		s.clearScreen();
 		initiateBattle(user, opponent, s);
 	}
@@ -74,13 +75,13 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 					}
 				}
 
-				curPlayerPokemonIndex = s.inputInt("Your Pokemon choice: ");
+				curPlayerPokemonIndex = s.inputCharNoEnter("Your Pokemon choice: ") - 48;
 				curPlayerPokemon = &playerRoster[curPlayerPokemonIndex];
 				curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
 				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 			}
 			else {
-				moveInd = s.inputInt("Your move: ");
+				moveInd = s.inputCharNoEnter("Your move: ") - 48;
 
 				mv = curPlayerMoves[moveInd];
 
@@ -122,7 +123,7 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 		a.setRoster(playerRoster);
 		b.setRoster(oppRoster);
 
-		s.inputInt("");
+		s.inputCharNoEnter("Press any key to continue...");
 
 		s.clearScreen();
 	}
@@ -130,7 +131,7 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 	if (b.hasAlivePokemon()) s.printToScreen("Opponent won!");
 	else s.printToScreen("You won!");
 
-	s.inputInt("");
+	s.inputCharNoEnter("Press any key to continue...");
 }
 
 std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) {

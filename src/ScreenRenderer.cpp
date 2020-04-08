@@ -1,4 +1,5 @@
 #include <string>
+#include <cstdlib>
 #include <iostream>
 
 #include "ScreenRenderer.h"
@@ -9,6 +10,18 @@ void ScreenRenderer::clearScreen() {
 
 void ScreenRenderer::printToScreen(std::string s) {
 	std::cout << s << std::endl;
+}
+
+char ScreenRenderer::inputCharNoEnter(std::string s) {
+	std::cout << s;
+
+	system("stty raw");
+	char c = getchar();
+	system("stty cooked");
+
+	std::cout << std::endl;
+
+	return c;
 }
 
 std::string ScreenRenderer::inputString(std::string s) {

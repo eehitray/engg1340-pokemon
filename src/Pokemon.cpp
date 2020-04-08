@@ -106,6 +106,7 @@ void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
 {
 	S.printToScreen(name);
 	S.printToScreen("Level: " + std::to_string(level));
+	S.printToScreen("Type: " + std::string(1, type));
 	S.printToScreen("HP: " + std::to_string(hp));
 	if (printMoves) {
 		for(int i=0;i<moveset.size();i++)
@@ -114,5 +115,5 @@ void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
 		}
 	}
 
-	S.printToScreen("");
+	S.printToScreen();
 }
