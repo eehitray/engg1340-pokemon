@@ -6,6 +6,7 @@
 class Pokemon;
 class Player;
 class ScreenRenderer;
+class Map;
 
 class MainGame {
 
@@ -13,6 +14,7 @@ class MainGame {
 		void mainGameLoop();
 		void initiateBattle(Player, Player, ScreenRenderer);
 		std::vector<Pokemon> generateRandomSelection(std::vector<int>);
+		bool handleMovement(char, Map&);
 
 };
 
