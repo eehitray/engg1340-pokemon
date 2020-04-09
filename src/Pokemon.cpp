@@ -12,6 +12,8 @@ Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<std::string> string
 	level = lvl;
 	maxhp = lvl*10;
 	hp = maxhp;
+	reqxp = lvl*100;
+	currentxp = 0;
 	moveset.push_back({stringset[0],3,1});
 	moveset.push_back({stringset[1],5,0.5});
 	//add command for 3rd move here
@@ -40,6 +42,16 @@ int Pokemon::getHP()
 int Pokemon::getLevel()
 {
 	return level;
+}
+
+int Pokemon::getReqXP()
+{
+	return reqxp;
+}
+
+int Pokemon::getCurrentXP()
+{
+	return currentxp;
 }
 
 std::vector<Move> Pokemon::getFinalDamage(char t)
@@ -97,9 +109,31 @@ void Pokemon::setLevel(int lvl)
 	level = lvl;
 	maxhp = level*10;
 	hp = maxhp;
+	reqxp = level*100;
 	moveset[0].damage += (level - 1) * 3;
 	moveset[1].damage += (level - 1) * 5;
 	//moveset[2].damage +=7;
+}
+
+void Pokemon::setXP(ScreenRenderer S,int xp)
+{
+	while(xp>0)
+	{
+		if(currentxp+xp < reqxp)
+		{
+			currentxp += xp;
+			S.printToScreen(name + " gained " + std::to_string(xp) +" XP!");
+			xp = 0;
+		}
+		else
+		{
+			S.printToScreen(name + " gained " + std::to_string(reqxp - currentxp) +" XP!");
+			xp = xp - reqxp + currentxp;
+			currentxp=0;
+			setLevel( getLevel() + 1); 
+			S.printToScreen(name + " levelled up!");
+		}
+	}
 }
 
 void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
@@ -116,4 +150,19 @@ void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
 	}
 
 	S.printToScreen();
+}
+
+int Pokemon::opponentXP(int d, int oppHP)
+{
+	int xp;
+	if(d>oppHP)
+	{
+		xp = (oppHP*10)/4;
+		return xp;
+	}
+	else
+	{
+		xp = (d*10)/4;
+		return xp;
+	}
 }

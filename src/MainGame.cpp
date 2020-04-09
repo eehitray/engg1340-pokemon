@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include <algorithm>
 #include <fstream>
 #include <cstdlib>
@@ -33,7 +34,7 @@ void MainGame::mainGameLoop() {
 		s.clearScreen();
 		initiateBattle(user, opponent, s);
 	}
-
+ 
 }
 
 void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
@@ -41,6 +42,7 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 	int i;
 	int moveInd;
 	double prob;
+	std::vector<int> exp(3,0);
 	Move mv;
 
 	std::vector<Pokemon> playerRoster = a.getRoster();
@@ -89,6 +91,7 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 
 				if (prob <= mv.hit) {
 					s.printToScreen("You hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
+					exp[curPlayerPokemonIndex] += curPlayerPokemon -> opponentXP(mv.damage, curOppPokemon -> getHP());
 					curOppPokemon -> setHP(curOppPokemon -> getHP() - mv.damage);
 				}
 				else s.printToScreen("You missed!");
@@ -128,6 +131,8 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 		s.clearScreen();
 	}
 
+	a.addXP(s,exp);
+	
 	if (b.hasAlivePokemon()) s.printToScreen("Opponent won!");
 	else s.printToScreen("You won!");
 
