@@ -3,6 +3,8 @@
 
 #include <string>
 
+class Map;
+
 class ScreenRenderer {
 	public:
 		void clearScreen();
@@ -10,5 +12,6 @@ class ScreenRenderer {
 		char inputCharNoEnter(std::string s = "");
 		std::string inputString(std::string s = "");
 		int inputInt(std::string s = "");
+		void printRenderableMap(Map);
 };
 #endif

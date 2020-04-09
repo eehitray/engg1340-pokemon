@@ -11,10 +11,12 @@
 #include "Pokemon.h"
 #include "Move.h"
 #include "Player.h"
+#include "Map.h"
 
 void MainGame::mainGameLoop() {
 	srand(time(NULL));
 	ScreenRenderer s;
+	Map m("map.txt");
 	std::string name;
 	char inp;
 
@@ -29,11 +31,16 @@ void MainGame::mainGameLoop() {
 
 	inp = s.inputCharNoEnter();
 
-	if (inp == 'y') {
-		s.clearScreen();
-		initiateBattle(user, opponent, s);
-	}
+	bool hasMoved = false;
 
+	while (inp != 'z') {
+		s.clearScreen();
+		hasMoved = handleMovement(inp, m);
+		s.printRenderableMap(m);
+		s.printToScreen();
+		s.printToScreen();
+		inp = s.inputCharNoEnter();
+	}
 }
 
 void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
@@ -165,4 +172,23 @@ std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) 
 	}
 
 	return return_list;
+}
+
+bool MainGame::handleMovement(char inp, Map& m) {
+	switch (inp) {
+		case 'w':
+			m.moveUp();
+			return true;
+		case 'a':
+			m.moveLeft();
+			return true;
+		case 's':
+			m.moveDown();
+			return true;
+		case 'd':
+			m.moveRight();
+			return true;
+	}
+
+	return false;
 }

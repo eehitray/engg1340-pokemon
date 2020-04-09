@@ -5,36 +5,64 @@
 
 #include "Map.h"
 
-Map::Map(string file) : renderHeight(41) {
-	width = 40;
+Map::Map(std::string file) : width(40), renderHeight(41) {
+	std::ifstream f(file);
 
-	ifstream f(file);
+	std::string temp;
+	
+	if (f) {
+		f >> height;
+		f >> playerR >> playerC;
 
-	string temp;
+		updateRenderBounds();
 
-	f >> height;
-	f >> playerR >> playerC;
-
-	renderTopBound = max(0, playerR - renderHeight / 2);
-	renderBottomBound = min(height - 1, playerR + renderHeight / 2);
-
-	while(getline(f, temp)) {
-		vector<char> row(width);
-		for (int i = 0; i < width; i++) cin >> row[i];
-		map.push_back(row);
+		while(getline(f, temp)) {
+			std::vector<char> row(width);
+			for (int i = 0; i < width; i++) f >> row[i];
+			map.push_back(row);
+		}
 	}
+
+	f.close();
 }
 
 std::vector<std::vector<char>> Map::getRenderableMap() {
 	std::vector<std::vector<char>> renderableMap;
 
-	for (int i = renderTopBound; i <= renderTopBound; i++) renderableMap.push_back(map[i]);
+	for (int i = renderTopBound; i <= renderBottomBound; i++) {
+		renderableMap.push_back(map[i]);
+	} 
 
 	return renderableMap;
 }
 
+void Map::updateRenderBounds() {
+	renderTopBound = playerR - renderHeight / 2;
+	renderBottomBound = playerR + renderHeight / 2;
+
+	if (renderTopBound < 0) {
+		renderTopBound = 0;
+		renderBottomBound = renderHeight - 1;
+	}
+	else if (renderBottomBound >= height) {
+		renderBottomBound = height - 1;
+		renderTopBound = height - renderHeight + 1;
+	}
+}
+int Map::getRenderWidth() {
+	return width;
+}
+
+int Map::getRenderHeight() {
+	return renderHeight;
+}
+
 int Map::getPlayerRow() { 
 	return playerR;
+}
+
+int Map::getPlayerRenderRow() {
+	return playerR - renderTopBound;
 }
 
 int Map::getPlayerCol() {
@@ -47,8 +75,7 @@ void Map::setPlayerRow(int row) {
 	if (playerR >= height) playerR = height - 1;
 	else if (playerR < 0) playerR = 0;
 	
-	renderTopBound = max(0, playerR - renderHeight / 2);
-	renderBottomBound = min(height - 1, playerR + renderHeight / 2);
+	updateRenderBounds();
 }
 
 void Map::setPlayerCol(int col) {
