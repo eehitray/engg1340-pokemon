@@ -18,6 +18,7 @@ class Map {
 	public:
 
 	Map(std::string);
+	char getTileAtPlayerPos();
 	std::vector<std::vector<char>> getRenderableMap();
 	void updateRenderBounds();
 	int getRenderWidth();

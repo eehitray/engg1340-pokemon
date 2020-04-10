@@ -39,11 +39,22 @@ void MainGame::mainGameLoop() {
 		s.printRenderableMap(m);
 		s.printToScreen();
 		s.printToScreen();
+
+		if (m.getTileAtPlayerPos() == 'G' && hasMoved) {
+			double prob = ((double) rand() / (RAND_MAX));
+
+			if (prob < 0.05 && user.hasAlivePokemon()) {
+				s.printToScreen("You encountered a random Pokemon!");
+				s.inputCharNoEnter();
+				s.clearScreen();
+				initiateBattle(user, Player("David", generateRandomSelection({1})), s);
+			}
+		}
 		inp = s.inputCharNoEnter();
 	}
 }
 
-void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
+void MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 	int turn = 0;
 	int i;
 	int moveInd;
@@ -55,8 +66,11 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 
 	int curPlayerPokemonIndex = 0, curOppPokemonIndex = 0;
 
-	Pokemon *curPlayerPokemon = &playerRoster[0];
-	Pokemon *curOppPokemon = &oppRoster[0];
+	//Find first alive Pokemon
+	for (; curPlayerPokemonIndex < playerRoster.size(); curPlayerPokemonIndex++) if (playerRoster[curPlayerPokemonIndex].getHP() > 0) break;
+
+	Pokemon *curPlayerPokemon = &playerRoster[curPlayerPokemonIndex];
+	Pokemon *curOppPokemon = &oppRoster[curOppPokemonIndex];
 
 	std::vector<Move> curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
 	std::vector<Move> curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());

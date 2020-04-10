@@ -26,6 +26,10 @@ Map::Map(std::string file) : width(40), renderHeight(41) {
 	f.close();
 }
 
+char Map::getTileAtPlayerPos() {
+	return map[playerR][playerC];
+}
+
 std::vector<std::vector<char>> Map::getRenderableMap() {
 	std::vector<std::vector<char>> renderableMap;
 
