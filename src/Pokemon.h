@@ -34,7 +34,7 @@ class Pokemon
 	void setName(std::string n);
 	void setHP(int HP);
 	void setLevel(int lvl);
-	void setXP(ScreenRenderer S, int xp);
+	void addXP(ScreenRenderer S, int xp);
 	void printDetails(ScreenRenderer S, bool printMoves);
 	int opponentXP(int d, int oppHP);
 };

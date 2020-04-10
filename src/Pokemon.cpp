@@ -115,7 +115,7 @@ void Pokemon::setLevel(int lvl)
 	//moveset[2].damage +=7;
 }
 
-void Pokemon::setXP(ScreenRenderer S,int xp)
+void Pokemon::addXP(ScreenRenderer S,int xp)
 {
 	while(xp>0)
 	{

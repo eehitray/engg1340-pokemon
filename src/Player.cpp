@@ -63,6 +63,6 @@ void Player::addXP(ScreenRenderer S, std::vector<int> pokxp)
 	for(int i=0;i<pokxp.size();i++)
 	{
 		if(pokxp[i]!=0)
-			roster[i].setXP(S, pokxp[i]);
+			roster[i].addXP(S, pokxp[i]);
 	}
 }
