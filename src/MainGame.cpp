@@ -21,7 +21,7 @@ void MainGame::mainGameLoop() {
 
 	Player p = startGame(s);
 
-	Map m("map.txt");
+	Map m("map.txt", p.getRow(), p.getCol());
 
 	s.clearScreen();
 	s.printToScreen("Hello " + p.getPname() + "! Ready to begin? (y for yes) ");
@@ -40,7 +40,7 @@ void MainGame::mainGameLoop() {
 		if (m.getTileAtPlayerPos() == 'G' && hasMoved) {
 			double prob = ((double) rand() / (RAND_MAX));
 
-			if (prob < 0.9 && p.hasAlivePokemon()) {
+			if (prob < 0.12 && p.hasAlivePokemon()) {
 				s.printToScreen("You encountered a random Pokemon!");
 				s.inputCharNoEnter();
 				s.clearScreen();
@@ -51,6 +51,9 @@ void MainGame::mainGameLoop() {
 	}
 
 	//Write to file
+	p.setRow(m.getPlayerRow());
+	p.setCol(m.getPlayerCol());
+
 	std::ofstream f(p.getPname() + ".bin", std::ios::binary);
 	p.writeToFile(f);
 	f.close();

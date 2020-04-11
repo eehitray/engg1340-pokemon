@@ -17,7 +17,7 @@ class Map {
 	std::vector<std::vector<char>> map;
 	public:
 
-	Map(std::string);
+	Map(std::string, int, int);
 	char getTileAtPlayerPos();
 	std::vector<std::vector<char>> getRenderableMap();
 	void updateRenderBounds();
