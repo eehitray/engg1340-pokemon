@@ -5,6 +5,7 @@
 #include "Pokemon.h"
 #include "ScreenRenderer.h"
 #include<vector>
+#include <fstream>
 
 Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<std::string> stringset)
 {	name = n;
@@ -15,6 +16,10 @@ Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<std::string> string
 	moveset.push_back({stringset[0],3,1});
 	moveset.push_back({stringset[1],5,0.5});
 	//add command for 3rd move here
+}
+
+Pokemon::Pokemon(std::ifstream& f) {
+	readFromFile(f);
 }
 
 std::string Pokemon::getName()
@@ -116,4 +121,39 @@ void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
 	}
 
 	S.printToScreen();
+}
+
+void Pokemon::writeToFile(std::ofstream& f) {
+	f << name << std::endl
+	  << type << std::endl
+	  << hp << std::endl
+	  << maxhp << std::endl
+	  << level << std:: endl;
+
+	int movesetSize = (int) moveset.size();
+
+	f << movesetSize << std::endl;
+
+	for (Move m : moveset) {
+		f << m.name << std::endl
+		  << m.damage << std::endl
+		  << m.hit << std::endl;
+	}	
+}
+
+void Pokemon::readFromFile(std::ifstream& f) {
+	f >> name
+	  >> type
+	  >> hp
+	  >> maxhp
+	  >> level;
+
+	int movesetSize;
+	f >> movesetSize;
+
+	for (int i = 0; i < movesetSize; i++) {
+		Move m;
+		f >> m.name >> m.damage >> m.hit;
+		moveset.push_back(m);
+	}
 }

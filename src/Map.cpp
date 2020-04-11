@@ -5,7 +5,7 @@
 
 #include "Map.h"
 
-Map::Map(std::string file) : width(40), renderHeight(41) {
+Map::Map(std::string file, int r, int c) : width(40), renderHeight(41) {
 	std::ifstream f(file);
 
 	std::string temp;
@@ -23,7 +23,16 @@ Map::Map(std::string file) : width(40), renderHeight(41) {
 		}
 	}
 
+	if (r != -1 && c != -1) {
+		playerR = r;
+		playerC = c;
+	}
+
 	f.close();
+}
+
+char Map::getTileAtPlayerPos() {
+	return map[playerR][playerC];
 }
 
 std::vector<std::vector<char>> Map::getRenderableMap() {

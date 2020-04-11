@@ -16,20 +16,17 @@
 void MainGame::mainGameLoop() {
 	srand(time(NULL));
 	ScreenRenderer s;
-	Map m("map.txt");
-	std::string name;
-	char inp;
 
-	s.printToScreen("Welcome to Pokemon!");
+	s.printLoadingScreen();
 
-	name = s.inputString("Enter your name: ");
+	Player p = startGame(s);
 
-	Player user(name, generateRandomSelection({1, 1, 2}));
-	Player opponent("David", generateRandomSelection({1, 1, 2}));
+	Map m("map.txt", p.getRow(), p.getCol());
 
-	s.printToScreen("Hello " + name + "! Ready to begin? (y for yes) ");
+	s.clearScreen();
+	s.printToScreen("Hello " + p.getPname() + "! Ready to begin? (y for yes) ");
 
-	inp = s.inputCharNoEnter();
+	char inp = s.inputCharNoEnter();
 
 	bool hasMoved = false;
 
@@ -39,11 +36,30 @@ void MainGame::mainGameLoop() {
 		s.printRenderableMap(m);
 		s.printToScreen();
 		s.printToScreen();
+
+		if (m.getTileAtPlayerPos() == 'G' && hasMoved) {
+			double prob = ((double) rand() / (RAND_MAX));
+
+			if (prob < 0.12 && p.hasAlivePokemon()) {
+				s.printToScreen("You encountered a random Pokemon!");
+				s.inputCharNoEnter();
+				s.clearScreen();
+				initiateBattle(p, Player("David", generateRandomSelection({1})), s);
+			}
+		}
 		inp = s.inputCharNoEnter();
 	}
+
+	//Write to file
+	p.setRow(m.getPlayerRow());
+	p.setCol(m.getPlayerCol());
+
+	std::ofstream f(p.getPname() + ".bin", std::ios::binary);
+	p.writeToFile(f);
+	f.close();
 }
 
-void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
+void MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 	int turn = 0;
 	int i;
 	int moveInd;
@@ -55,8 +71,11 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 
 	int curPlayerPokemonIndex = 0, curOppPokemonIndex = 0;
 
-	Pokemon *curPlayerPokemon = &playerRoster[0];
-	Pokemon *curOppPokemon = &oppRoster[0];
+	//Find first alive Pokemon
+	for (; curPlayerPokemonIndex < playerRoster.size(); curPlayerPokemonIndex++) if (playerRoster[curPlayerPokemonIndex].getHP() > 0) break;
+
+	Pokemon *curPlayerPokemon = &playerRoster[curPlayerPokemonIndex];
+	Pokemon *curOppPokemon = &oppRoster[curOppPokemonIndex];
 
 	std::vector<Move> curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
 	std::vector<Move> curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
@@ -191,4 +210,25 @@ bool MainGame::handleMovement(char inp, Map& m) {
 	}
 
 	return false;
+}
+
+Player MainGame::startGame(ScreenRenderer s) {
+	s.clearScreen();
+	std::string name = s.inputString("Enter your name: ");
+
+	std::ifstream saveFile(name + ".bin", std::ios::binary);
+
+	if (saveFile) {
+		char c = s.inputCharNoEnter("A save file was found for your character. Would you like to load it (y), or would you like to start a new game? (n; file will be overwritten)");
+
+		if (c == 'y') {
+			Player p = Player(saveFile);
+			saveFile.close();
+			return p;
+		}
+	}
+
+	saveFile.close();
+
+	return Player(name, generateRandomSelection({1, 1, 2}));
 }
