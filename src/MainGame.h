@@ -15,6 +15,7 @@ class MainGame {
 		void initiateBattle(Player&, Player, ScreenRenderer);
 		std::vector<Pokemon> generateRandomSelection(std::vector<int>);
 		bool handleMovement(char, Map&);
+		Player startGame(ScreenRenderer);
 
 };
 

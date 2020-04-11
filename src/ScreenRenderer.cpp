@@ -66,3 +66,13 @@ void ScreenRenderer::printRenderableMap(Map m) {
 		std::cout << std::endl;
 	}
 }
+
+void ScreenRenderer::printLoadingScreen() {
+	std::cout << "Welcome to Pokemon!" << std::endl
+			  << "1. Start game" << std::endl
+			  << "2. Exit game" << std::endl;
+
+	char c = inputCharNoEnter();
+
+	if (c == '2') exit(0);
+}

@@ -17,5 +17,6 @@ class ScreenRenderer {
 		std::string inputString(std::string s = "");
 		int inputInt(std::string s = "");
 		void printRenderableMap(Map);
+		void printLoadingScreen();
 };
 #endif

@@ -5,13 +5,19 @@
 #include "Player.h"
 #include "ScreenRenderer.h"
 #include<vector>
+#include <iostream>
 #include<string>
+#include <fstream>
 
 
 Player::Player(std::string n, std::vector<Pokemon> pok)
 {
 	pname = n;
 	roster = pok;
+}
+
+Player::Player(std::ifstream& f) {
+	readFromFile(f);
 }
 
 std::string Player::getPname()
@@ -57,3 +63,28 @@ void Player::printDetails(ScreenRenderer S)
 		roster[i].printDetails(S, true);
 	}
 }
+
+void Player::writeToFile(std::ofstream& f) {
+	f << pname << std::endl;
+	
+	int rosterSize = (int) roster.size();
+
+	f << rosterSize << std::endl;
+
+	for (Pokemon p : roster) p.writeToFile(f);
+}
+
+void Player::readFromFile(std::ifstream& f) {
+	f >> pname;
+
+	int rosterSize;
+
+	f >> rosterSize;
+
+	roster.clear();
+
+	for (int i = 0; i < rosterSize; i++) {
+		roster.push_back(Pokemon(f));
+	}
+}
+

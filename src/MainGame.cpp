@@ -16,20 +16,17 @@
 void MainGame::mainGameLoop() {
 	srand(time(NULL));
 	ScreenRenderer s;
+
+	s.printLoadingScreen();
+
+	Player p = startGame(s);
+
 	Map m("map.txt");
-	std::string name;
-	char inp;
 
-	s.printToScreen("Welcome to Pokemon!");
+	s.clearScreen();
+	s.printToScreen("Hello " + p.getPname() + "! Ready to begin? (y for yes) ");
 
-	name = s.inputString("Enter your name: ");
-
-	Player user(name, generateRandomSelection({1, 1, 2}));
-	Player opponent("David", generateRandomSelection({1, 1, 2}));
-
-	s.printToScreen("Hello " + name + "! Ready to begin? (y for yes) ");
-
-	inp = s.inputCharNoEnter();
+	char inp = s.inputCharNoEnter();
 
 	bool hasMoved = false;
 
@@ -43,15 +40,20 @@ void MainGame::mainGameLoop() {
 		if (m.getTileAtPlayerPos() == 'G' && hasMoved) {
 			double prob = ((double) rand() / (RAND_MAX));
 
-			if (prob < 0.05 && user.hasAlivePokemon()) {
+			if (prob < 0.9 && p.hasAlivePokemon()) {
 				s.printToScreen("You encountered a random Pokemon!");
 				s.inputCharNoEnter();
 				s.clearScreen();
-				initiateBattle(user, Player("David", generateRandomSelection({1})), s);
+				initiateBattle(p, Player("David", generateRandomSelection({1})), s);
 			}
 		}
 		inp = s.inputCharNoEnter();
 	}
+
+	//Write to file
+	std::ofstream f(p.getPname() + ".bin", std::ios::binary);
+	p.writeToFile(f);
+	f.close();
 }
 
 void MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
@@ -205,4 +207,25 @@ bool MainGame::handleMovement(char inp, Map& m) {
 	}
 
 	return false;
+}
+
+Player MainGame::startGame(ScreenRenderer s) {
+	s.clearScreen();
+	std::string name = s.inputString("Enter your name: ");
+
+	std::ifstream saveFile(name + ".bin", std::ios::binary);
+
+	if (saveFile) {
+		char c = s.inputCharNoEnter("A save file was found for your character. Would you like to load it (y), or would you like to start a new game? (n; file will be overwritten)");
+
+		if (c == 'y') {
+			Player p = Player(saveFile);
+			saveFile.close();
+			return p;
+		}
+	}
+
+	saveFile.close();
+
+	return Player(name, generateRandomSelection({1, 1, 2}));
 }
