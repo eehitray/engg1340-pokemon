@@ -5,6 +5,7 @@
 
 #include<vector>
 #include<string>
+#include <fstream>
 
 struct Move;
 class ScreenRenderer;
@@ -22,6 +23,7 @@ class Pokemon
 
 	public:
 	Pokemon(std::string n, char t, int lvl, std::vector<std::string> stringset);
+	Pokemon(std::ifstream&);
 	std::string getName();
 	char getType();
 	int getMaxHP();
@@ -37,6 +39,8 @@ class Pokemon
 	void addXP(ScreenRenderer S, int xp);
 	void printDetails(ScreenRenderer S, bool printMoves);
 	int opponentXP(int d, int oppHP);
+	void writeToFile(std::ofstream&);
+	void readFromFile(std::ifstream&);
 };
 
 #endif
