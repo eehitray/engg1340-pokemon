@@ -177,6 +177,8 @@ void Pokemon::writeToFile(std::ofstream& f) {
 	  << type << std::endl
 	  << hp << std::endl
 	  << maxhp << std::endl
+	  << reqxp << std::endl
+	  << currentxp << std::endl
 	  << level << std:: endl;
 
 	int movesetSize = (int) moveset.size();
@@ -195,6 +197,8 @@ void Pokemon::readFromFile(std::ifstream& f) {
 	  >> type
 	  >> hp
 	  >> maxhp
+	  >> reqxp
+	  >> currentxp
 	  >> level;
 
 	int movesetSize;
