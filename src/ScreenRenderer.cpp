@@ -61,7 +61,7 @@ void ScreenRenderer::printHorizontalBorder() {
 	std::cout<<std::endl;
 }
 
-void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponentPokemon)
+void ScreenRenderer::printBattleScreen(Pokemon playerPokemon, Pokemon opponentPokemon)
 {
 	int spaceWidthInfo = 10;
 	int spaceWidthImage = 30;
@@ -71,20 +71,20 @@ void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponent
 	std::ifstream playerPokemonImage, opponentPokemonImage;
 	std::string tempPlayer, tempOpponent;
 
-	std::string playerPokemonFile = playerPokemon -> getName() + ".txt";
-	std::string opponentPokemonFile = opponentPokemon -> getName() + ".txt";
+	std::string playerPokemonFile = playerPokemon.getName() + ".txt";
+	std::string opponentPokemonFile = opponentPokemon.getName() + ".txt";
 
 	playerPokemonImage.open(playerPokemonFile);
 	opponentPokemonImage.open(opponentPokemonFile);
 
-	printLineOnBattleScreen(playerPokemon -> getName(), opponentPokemon -> getName(), spaceWidthInfo);
-	printLineOnBattleScreen("Level: " + std::to_string(playerPokemon -> getLevel()), "Level: " + std::to_string(opponentPokemon -> getLevel()), spaceWidthInfo);
-	printLineOnBattleScreen("Type: " + std::string(1,playerPokemon -> getType()),"Type: " + std::string(1,opponentPokemon -> getType()), spaceWidthInfo);
-	printLineOnBattleScreen("HP: " + std::to_string(playerPokemon -> getHP()), "HP: " + std::to_string(opponentPokemon -> getHP()), spaceWidthInfo);
+	printLineOnBattleScreen(playerPokemon.getName(), opponentPokemon.getName(), spaceWidthInfo);
+	printLineOnBattleScreen("Level: " + std::to_string(playerPokemon.getLevel()), "Level: " + std::to_string(opponentPokemon.getLevel()), spaceWidthInfo);
+	printLineOnBattleScreen("Type: " + std::string(1,playerPokemon.getType()),"Type: " + std::string(1,opponentPokemon.getType()), spaceWidthInfo);
+	printLineOnBattleScreen("HP: " + std::to_string(playerPokemon.getHP()), "HP: " + std::to_string(opponentPokemon.getHP()), spaceWidthInfo);
 
 	printLineOnBattleScreen();
 	printLineOnBattleScreen("Moves: ");
-	std::vector<Move> mvset = playerPokemon -> getMoveset();
+	std::vector<Move> mvset = playerPokemon.getMoveset();
 	printLineOnBattleScreen();
 	for(int i=0; i< mvset.size(); i++)
 	{
@@ -97,19 +97,18 @@ void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponent
 		++playerPokemonFileLines;
 	while(getline(opponentPokemonImage,tempOpponent))
 		++opponentPokemonFileLines;
-
-	playerPokemonImage.close();
-	opponentPokemonImage.close();
-
-	playerPokemonImage.open(playerPokemonFile);
-	opponentPokemonImage.open(opponentPokemonFile);
+	
+	playerPokemonImage.clear();
+	playerPokemonImage.seekg(0,std::ios::beg);
+	opponentPokemonImage.clear();
+	opponentPokemonImage.seekg(0,std::ios::beg);
 
 	if(playerPokemonFileLines > opponentPokemonFileLines)
 	{
 		for(int i=0;i< playerPokemonFileLines - opponentPokemonFileLines; i++)
 		{
 			getline(playerPokemonImage,tempPlayer);
-			printLineOnBattleScreen(tempPlayer, "", 30);
+			printLineOnBattleScreen(tempPlayer, "", spaceWidthImage);
 		}
 	}
 	else
@@ -131,4 +130,5 @@ void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponent
 
 	printLineOnBattleScreen();
 	printLineOnBattleScreen();
+
 }

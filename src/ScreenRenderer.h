@@ -13,6 +13,6 @@ class ScreenRenderer {
 		std::string inputString(std::string s = "");
 		int inputInt(std::string s = "");
 		void printHorizontalBorder();
-		void printBattleScreen(Pokemon *playerPokemon, Pokemon *opponentPokemon);
+		void printBattleScreen(Pokemon playerPokemon, Pokemon opponentPokemon);
 };
 #endif

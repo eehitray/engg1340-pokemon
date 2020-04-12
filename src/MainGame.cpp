@@ -60,7 +60,7 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 	while (a.hasAlivePokemon() && b.hasAlivePokemon()) {
 
 		s.printHorizontalBorder();
-		s.printBattleScreen(curPlayerPokemon, curOppPokemon);
+		s.printBattleScreen(*curPlayerPokemon, *curOppPokemon);
 		s.printHorizontalBorder();
 
 		if (turn % 2 == 0) { //Player turn
