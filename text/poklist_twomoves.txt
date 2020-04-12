@@ -1,6 +1,6 @@
 Charmander F Ember Flamethrower
 Magmar F FireSpin Flamethrower
-Ninetales F Ember Flamethrower
+Rapidash F Ember Flamethrower
 Flareon F FireSpin Flamethrower
 Squirtle W WaterGun AquaTail
 Gyarados W Whirlpool Waterfall
@@ -9,4 +9,4 @@ Vaporeon W Whirlpool WaterPulse
 Bulbasaur G VineWhip RazorLeaf
 Leafeon G VineWhip LeafBlade
 Exeggutor G VineWhip BulletSeed
-Shiftry G VineWhip RazorLeaf
+Treecko G VineWhip EnergyBall
