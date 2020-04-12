@@ -23,7 +23,6 @@ void MainGame::mainGameLoop() {
 
 	Map m("map.txt", p.getRow(), p.getCol());
 
-	s.clearScreen();
 	s.printToScreen("Hello " + p.getPname() + "! Ready to begin? (y for yes) ");
 
 	char inp = s.inputCharNoEnter();
@@ -44,25 +43,21 @@ void MainGame::mainGameLoop() {
 				s.printToScreen("You encountered a random Pokemon!");
 				s.inputCharNoEnter();
 				s.clearScreen();
-				initiateBattle(p, Player("David", generateRandomSelection({1})), s);
+				initiateBattle(p, Player("", generateRandomSelection({1})), s);
 			}
 		}
 		inp = s.inputCharNoEnter();
 	}
 
 	//Write to file
-	p.setRow(m.getPlayerRow());
-	p.setCol(m.getPlayerCol());
-
-	std::ofstream f(p.getPname() + ".bin", std::ios::binary);
-	p.writeToFile(f);
-	f.close();
+	endGame(p, m, s);
 }
 
 void MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 	int turn = 0;
 	int i;
 	int moveInd;
+	char moveChar;
 	double prob;
 	Move mv;
 
@@ -107,17 +102,35 @@ void MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 			}
 			else {
-				moveInd = s.inputCharNoEnter("Your move: ") - 48;
+				moveChar = s.inputCharNoEnter("Your move (s for switch pokemon, 0-2 for move): ");
 
-				mv = curPlayerMoves[moveInd];
+				if (moveChar == 's') {
+					s.printToScreen("Available Pokemon: ");
 
-				prob = ((double) rand() / (RAND_MAX));
+					for (i = 0; i < playerRoster.size(); i++) {
+						if (i != curPlayerPokemonIndex && playerRoster[i].getHP() != 0) {
+							s.printToScreen(std::to_string(i) + ": " + playerRoster[i].getName());
+						}
+					}
 
-				if (prob <= mv.hit) {
-					s.printToScreen("You hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
-					curOppPokemon -> setHP(curOppPokemon -> getHP() - mv.damage);
+					curPlayerPokemonIndex = s.inputCharNoEnter("Your Pokemon choice: ") - 48;
+					curPlayerPokemon = &playerRoster[curPlayerPokemonIndex];
+					curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
+					curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 				}
-				else s.printToScreen("You missed!");
+				else {
+					moveInd = moveChar - 48;
+
+					mv = curPlayerMoves[moveInd];
+
+					prob = ((double) rand() / (RAND_MAX));
+
+					if (prob <= mv.hit) {
+						s.printToScreen("You hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
+						curOppPokemon -> setHP(curOppPokemon -> getHP() - mv.damage);
+					}
+					else s.printToScreen("You missed!");
+				}	
 			}
 		}
 		else { //Opponent's turn
@@ -231,4 +244,15 @@ Player MainGame::startGame(ScreenRenderer s) {
 	saveFile.close();
 
 	return Player(name, generateRandomSelection({1, 1, 2}));
+}
+
+void MainGame::endGame(Player& p, Map m, ScreenRenderer s) {
+	p.setRow(m.getPlayerRow());
+	p.setCol(m.getPlayerCol());
+
+	std::ofstream f(p.getPname() + ".bin", std::ios::binary);
+	p.writeToFile(f);
+	f.close();
+
+	s.printToScreen("Thanks for playing! Your progress has been saved. Come back soon!");
 }

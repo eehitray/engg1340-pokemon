@@ -16,6 +16,7 @@ class MainGame {
 		std::vector<Pokemon> generateRandomSelection(std::vector<int>);
 		bool handleMovement(char, Map&);
 		Player startGame(ScreenRenderer);
+		void endGame(Player&, Map, ScreenRenderer);
 
 };
 
