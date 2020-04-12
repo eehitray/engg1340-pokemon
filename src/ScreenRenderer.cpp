@@ -17,11 +17,15 @@ void ScreenRenderer::printToScreen(std::string s) {
 	std::cout << s << std::endl;
 }
 
-void ScreenRenderer::printLineOnBattleScreen(std::string s1, std::string s2, int spaceWidth) {
+void ScreenRenderer::printLineOnBattleScreen(std::string s1, std::string s2, int spaceWidth, bool longBorder) {
 	std::cout<<std::left<<std::setw(80)<< s1;
 	for(int i=0;i< spaceWidth; i++)
 		std::cout<<" ";
-	std::cout<< s2 << std::endl;
+	std::cout<< std::left << std::setw(80) << s2;
+	if(longBorder == true)
+		std::cout<< std::right << std::setw(21) << "|" << std::endl;
+	else
+		std::cout<< std::right << "|" << std::endl;
 }
 
 char ScreenRenderer::inputCharNoEnter(std::string s) {
@@ -30,9 +34,8 @@ char ScreenRenderer::inputCharNoEnter(std::string s) {
 	system("stty raw");
 	char c = getchar();
 	system("stty cooked");
-
-	std::cout << std::endl;
-
+	
+	std::cout << std::endl; 
 	return c;
 }
 
@@ -50,6 +53,12 @@ int ScreenRenderer::inputInt(std::string s) {
 	std::cout << s;
 	std::cin >> input;
     return input;	
+}
+
+void ScreenRenderer::printHorizontalBorder() {
+	for(int i=0;i<171;i++)
+		std::cout<<"-";
+	std::cout<<std::endl;
 }
 
 void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponentPokemon)
@@ -73,16 +82,16 @@ void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponent
 	printLineOnBattleScreen("Type: " + std::string(1,playerPokemon -> getType()),"Type: " + std::string(1,opponentPokemon -> getType()), spaceWidthInfo);
 	printLineOnBattleScreen("HP: " + std::to_string(playerPokemon -> getHP()), "HP: " + std::to_string(opponentPokemon -> getHP()), spaceWidthInfo);
 
-	printToScreen();
-	printToScreen("Moves: ");
+	printLineOnBattleScreen();
+	printLineOnBattleScreen("Moves: ");
 	std::vector<Move> mvset = playerPokemon -> getMoveset();
-	printToScreen();
+	printLineOnBattleScreen();
 	for(int i=0; i< mvset.size(); i++)
 	{
-		printToScreen(std::to_string(i) + ". " + mvset[i].name + "  Damage: " + std::to_string(mvset[i].damage));
+		printLineOnBattleScreen(std::to_string(i) + ". " + mvset[i].name + "  Damage: " + std::to_string(mvset[i].damage));
 	}
 
-	printToScreen();
+	printLineOnBattleScreen();
 
 	while(getline(playerPokemonImage,tempPlayer))
 		++playerPokemonFileLines;
@@ -100,7 +109,7 @@ void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponent
 		for(int i=0;i< playerPokemonFileLines - opponentPokemonFileLines; i++)
 		{
 			getline(playerPokemonImage,tempPlayer);
-			printToScreen(tempPlayer);
+			printLineOnBattleScreen(tempPlayer, "", 30);
 		}
 	}
 	else
@@ -108,18 +117,18 @@ void ScreenRenderer::printBattleScreen(Pokemon *playerPokemon, Pokemon *opponent
 		for(int i=0;i< opponentPokemonFileLines - playerPokemonFileLines; i++)
 		{
 			getline(opponentPokemonImage,tempOpponent);
-			printLineOnBattleScreen("" , tempOpponent, spaceWidthInfo); 
+			printLineOnBattleScreen("" , tempOpponent, spaceWidthInfo, true);  
 		}
 	}
 
 	while(getline(playerPokemonImage,tempPlayer) && getline(opponentPokemonImage,tempOpponent))
 	{
-		printLineOnBattleScreen(tempPlayer, tempOpponent, spaceWidthImage);
+		printLineOnBattleScreen(tempPlayer, tempOpponent, spaceWidthImage, true);
 	}
 
 	playerPokemonImage.close();
 	opponentPokemonImage.close();
 
-	printToScreen();
-	printToScreen();
+	printLineOnBattleScreen();
+	printLineOnBattleScreen();
 }

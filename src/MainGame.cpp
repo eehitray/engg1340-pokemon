@@ -55,29 +55,21 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 	std::vector<Move> curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
 	std::vector<Move> curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 
+	s.clearScreen();
 
 	while (a.hasAlivePokemon() && b.hasAlivePokemon()) {
 
-		s.clearScreen();
-
-		//s.printToScreen("Your current Pokemon: ");
-		//curPlayerPokemon -> printDetails(s, true);
-
-		//s.printToScreen("Your details: ");
-		//a.printDetails(s);
-
-		//s.printToScreen("Opponent's current Pokemon: ");
-		//curOppPokemon -> printDetails(s, false);
-
+		s.printHorizontalBorder();
 		s.printBattleScreen(curPlayerPokemon, curOppPokemon);
+		s.printHorizontalBorder();
 
 		if (turn % 2 == 0) { //Player turn
 			if (curPlayerPokemon -> getHP() == 0) { //Switch pokemon
-				s.printToScreen("Oh no! Your Pokemon fainted! Choose a new Pokemon: ");
+				s.printLineOnBattleScreen("Oh no! Your Pokemon fainted! Choose a new Pokemon: ");
 
 				for (i = 0; i < playerRoster.size(); i++) {
 					if (i != curPlayerPokemonIndex && playerRoster[i].getHP() != 0) {
-						s.printToScreen(std::to_string(i) + ": " + playerRoster[i].getName());
+						s.printLineOnBattleScreen(std::to_string(i) + ": " + playerRoster[i].getName());
 					}
 				}
 
@@ -94,22 +86,22 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 				prob = ((double) rand() / (RAND_MAX));
 
 				if (prob <= mv.hit) {
-					s.printToScreen("You hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
+					s.printLineOnBattleScreen("You hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
 					exp[curPlayerPokemonIndex] += curPlayerPokemon -> opponentXP(mv.damage, curOppPokemon -> getHP());
 					curOppPokemon -> setHP(curOppPokemon -> getHP() - mv.damage);
 				}
-				else s.printToScreen("You missed!");
+				else s.printLineOnBattleScreen("You missed!");
 			}
 		}
 		else { //Opponent's turn
 			if (curOppPokemon -> getHP() == 0) { //Switch pokemon
-				s.printToScreen("The opponent's pokemon fainted!");
+				s.printLineOnBattleScreen("The opponent's pokemon fainted!");
 
 				curOppPokemon = &oppRoster[++curOppPokemonIndex];
 				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 				curPlayerMoves = curPlayerPokemon -> getFinalDamage(curOppPokemon -> getType());
 
-				s.printToScreen("The opponent switches to " + curOppPokemon -> getName() + "!");
+				s.printLineOnBattleScreen("The opponent switches to " + curOppPokemon -> getName() + "!");
 
 			}
 			else {
@@ -118,10 +110,10 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 				prob = ((double) rand() / (RAND_MAX));
 
 				if (prob <= mv.hit) {
-					s.printToScreen("Opponent hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
+					s.printLineOnBattleScreen("Opponent hit using " + mv.name + " for " + std::to_string(mv.damage) + " HP!");
 					curPlayerPokemon -> setHP(curPlayerPokemon -> getHP() - mv.damage);
 				}
-				else s.printToScreen("Opponent missed!");
+				else s.printLineOnBattleScreen("Opponent missed!");
 			}
 		}
 
@@ -129,8 +121,11 @@ void MainGame::initiateBattle(Player a, Player b, ScreenRenderer s) {
 
 		a.setRoster(playerRoster);
 		b.setRoster(oppRoster);
-
+		
+		s.printHorizontalBorder();
 		s.inputCharNoEnter("Press any key to continue...");
+
+		s.clearScreen();
 
 	}
 
