@@ -5,8 +5,8 @@
 
 #include "Pokemon.h"
 #include "Move.h"
-#include<string>
-#include<vector>
+#include <string>
+#include <vector>
 #include <fstream>
 
 class ScreenRenderer;
@@ -29,7 +29,8 @@ class Player
 	void addtoRoster(Pokemon);
 	void setRoster(std::vector<Pokemon>);
 	bool hasAlivePokemon();
-	void printDetails(ScreenRenderer);
+	void printDetails(ScreenRenderer S);
+	void addXP(ScreenRenderer S, std::vector<int> pokxp);
 	void writeToFile(std::ofstream&);
 	void readFromFile(std::ifstream&);
 };

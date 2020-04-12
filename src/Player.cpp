@@ -81,6 +81,15 @@ void Player::printDetails(ScreenRenderer S)
 	}
 }
 
+void Player::addXP(ScreenRenderer S, std::vector<int> pokxp)
+{
+	for(int i=0;i<pokxp.size();i++)
+	{
+		if(pokxp[i]!=0)
+			roster[i].addXP(S, pokxp[i]);
+	}
+}
+
 void Player::writeToFile(std::ofstream& f) {
 	f << pname << std::endl
 	  << r << std::endl
