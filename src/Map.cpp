@@ -14,8 +14,6 @@ Map::Map(std::string file, int r, int c) : width(40), renderHeight(41) {
 		f >> height;
 		f >> playerR >> playerC;
 
-		updateRenderBounds();
-
 		while(getline(f, temp)) {
 			std::vector<char> row(width);
 			for (int i = 0; i < width; i++) f >> row[i];
@@ -29,6 +27,8 @@ Map::Map(std::string file, int r, int c) : width(40), renderHeight(41) {
 	}
 
 	f.close();
+
+	updateRenderBounds();
 }
 
 char Map::getTileAtPlayerPos() {

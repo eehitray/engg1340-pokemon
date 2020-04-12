@@ -24,6 +24,6 @@ $(out_dir)main_test.o: $(test_dir)main_test.cpp
 	g++ -c $< -o $@
 
 clean:
-	rm -rf $(out_dir)*.o $(out_dir)*.exe
+	rm -rf $(out_dir)*.o $(out_dir)*.exe $(out_dir)*.bin
 
 .PHONY: clean
