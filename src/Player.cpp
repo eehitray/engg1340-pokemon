@@ -74,7 +74,10 @@ bool Player::hasAlivePokemon()
 
 void Player::printDetails(ScreenRenderer S)
 {
-	S.printToScreen(pname);
+	S.printToScreen("Your details are: ");
+	S.printToScreen("Name: " + pname);
+	S.printToScreen();
+	S.printToScreen("Your Pokemon: ");
 	for(int i=0;i<roster.size();i++)
 	{
 		roster[i].printDetails(S, true);

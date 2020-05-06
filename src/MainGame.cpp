@@ -31,8 +31,9 @@ void MainGame::mainGameLoop() {
 
 	while (inp != 'z') {
 		s.clearScreen();
-		hasMoved = handleMovement(inp, m);
+		hasMoved = handleInput(inp, m, p, s);
 		s.printRenderableMap(m);
+
 		s.printToScreen();
 		s.printToScreen();
 
@@ -210,7 +211,7 @@ std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) 
 	return return_list;
 }
 
-bool MainGame::handleMovement(char inp, Map& m) {
+bool MainGame::handleInput(char inp, Map& m, Player p, ScreenRenderer s) {
 	switch (inp) {
 		case 'w':
 			m.moveUp();
@@ -224,6 +225,13 @@ bool MainGame::handleMovement(char inp, Map& m) {
 		case 'd':
 			m.moveRight();
 			return true;
+		case 'p':
+			s.clearScreen();
+			p.printDetails(s);
+			s.inputCharNoEnter("Press any key to continue.");
+			s.clearScreen();
+			return false;
+			
 	}
 
 	return false;
