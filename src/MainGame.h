@@ -2,6 +2,7 @@
 #define MAIN_GAME
 
 #include <vector>
+#include <string>
 
 class Pokemon;
 class Player;
@@ -12,11 +13,13 @@ class MainGame {
 
 	public:
 		void mainGameLoop();
-		void initiateBattle(Player&, Player, ScreenRenderer);
+		void randomEncounter(Map&, Player&, ScreenRenderer, bool);
+		bool initiateBattle(Player&, Player, ScreenRenderer);
 		std::vector<Pokemon> generateRandomSelection(std::vector<int>);
-		bool handleMovement(char, Map&);
+		std::string getRandomTrainerName();
+		bool handleInput(char, Map&, Player&, ScreenRenderer);
 		Player startGame(ScreenRenderer);
-		void endGame(Player&, Map, ScreenRenderer);
+		void endGame(Player&, Map&, ScreenRenderer);
 
 };
 
