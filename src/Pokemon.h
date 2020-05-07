@@ -19,6 +19,7 @@ class Pokemon
 	int reqxp;
 	int currentxp;
 	int level;
+	int numMoves;
 	std::vector<Move> moveset;
 
 	public:
@@ -33,6 +34,7 @@ class Pokemon
 	int getCurrentXP();
 	std::vector<Move> getFinalDamage(char t);
 	std::vector<Move> getMoveset();
+	int getNumMoves();
 	void setName(std::string n);
 	void setHP(int HP);
 	void setLevel(int lvl);

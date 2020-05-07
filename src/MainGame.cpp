@@ -61,7 +61,7 @@ void MainGame::randomEncounter(Map& m, Player& p, ScreenRenderer s, bool hasMove
 			s.printToScreen("You encountered a random Pokemon!");
 			s.inputCharNoEnter();
 			s.clearScreen();
-			initiateBattle(p, Player("", generateRandomSelection({p.getLevel() + 1})), s);
+			initiateBattle(p, Player("", generateRandomSelection({m.getBasePokemonLevel()})), s);
 		}
 	}
 }
@@ -113,7 +113,7 @@ bool MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 				curOppMoves = curOppPokemon -> getFinalDamage(curPlayerPokemon -> getType());
 			}
 			else {
-				moveChar = s.inputCharNoEnter("Your move (s for switch pokemon, 0-2 for move): ");
+				moveChar = s.inputCharNoEnter("Your move (s for switch pokemon, 0-" + std::to_string(curPlayerPokemon -> getNumMoves() - 1) + " for move): ");
 
 				if (moveChar == 's') {
 					s.printLineOnBattleScreen("Available Pokemon: ");
@@ -157,7 +157,7 @@ bool MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 
 			}
 			else {
-				mv = curOppMoves[rand() % curOppMoves.size()];
+				mv = curOppMoves[rand() % curOppPokemon -> getNumMoves()];
 
 				prob = ((double) rand() / (RAND_MAX));
 
@@ -198,7 +198,7 @@ bool MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 
 std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) {
 	std::ifstream in;
-	in.open("poklist_twomoves.txt");
+	in.open("poklist.txt");
 
 	std::vector<Pokemon> full_list, return_list;
 
@@ -209,14 +209,15 @@ std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) 
 
 	std::string mv1_name;
 	std::string mv2_name;
+	std::string mv3_name;
 
 	while (getline(in, s)) {
 		std::istringstream st(s);
 
 		st >> name >> type 
-		   >> mv1_name >> mv2_name;
+		   >> mv1_name >> mv2_name >> mv3_name;
 
-		full_list.push_back(Pokemon(name, type, 1, {mv1_name, mv2_name}));
+		full_list.push_back(Pokemon(name, type, 1, {mv1_name, mv2_name, mv3_name}));
 	}
 
 	random_shuffle(full_list.begin(), full_list.end());
@@ -282,7 +283,7 @@ bool MainGame::handleInput(char inp, Map& m, Player& p, ScreenRenderer s) {
 				s.printToScreen(randomTrainerName + " challenges you!");
 				s.inputCharNoEnter();
 				s.clearScreen();
-				bool victory = initiateBattle(p, Player(randomTrainerName, generateRandomSelection({p.getLevel() + 1, p.getLevel() + 1, p.getLevel() + 2})), s);
+				bool victory = initiateBattle(p, Player(randomTrainerName, generateRandomSelection({m.getBasePokemonLevel(), m.getBasePokemonLevel(), m.getBasePokemonLevel() + 1})), s);
 				if (victory) {
 					s.printToScreen("Congratulations!");
 					p.setLevel(p.getLevel() + 1);
@@ -312,7 +313,7 @@ Player MainGame::startGame(ScreenRenderer s) {
 	std::ifstream saveFile(name + ".bin", std::ios::binary);
 
 	if (saveFile) {
-		char c = s.inputCharNoEnter("A save file was found for your character. Would you like to load it (y), or would you like to start a new game? (n; file will be overwritten)");
+		char c = s.inputCharNoEnter("A save file was found for your character. Would you like to load it (y), or would you like to start a new game? (n; file will be overwritten) ");
 
 		if (c == 'y') {
 			Player p = Player(saveFile);

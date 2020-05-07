@@ -40,6 +40,7 @@ class Map {
 	void moveRight();
 	bool isBeforeTrainer(int);
 	int getNthTrainer(int);
+	int getBasePokemonLevel();
 };
 
 #endif

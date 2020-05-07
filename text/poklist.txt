@@ -1,12 +1,12 @@
-Charmander F Ember 3 1 FlameThrower 5 0.8 Inferno 7 0.6
-Magmar F FireSpin 3 1 FlameThrower 5 0.8 Overheat 7 0.6
-Rapidash F Ember 3 1 FlameThrower 5 0.8 FlameCharge 7 0.6
-Flareon F FireSpin 3 1 FlameThrower 5 0.8 FlareBlitz 7 0.6
-Squirtle W WaterGun 3 1 AquaTail 5 0.8 HydroPump 7 0.6
-Gyarados W Whirlpool 3 1 Waterfall 5 0.8 HydroPump 7 0.6
-Golduck W WaterGun 3 1 Surf 5 0.8 HydroPump 7 0.6 
-Vaporeon W Whirlpool 3 1 WaterPulse 5 0.8 HydroPump 7 0.6 
-Bulbasaur G VineWhip 3 1 RazorLeaf 5 0.8 SolarBeam 7 0.6 
-Leafeon G VineWhip 3 1 LeafBlade 5 0.8 LeafStorm 7 0.6 
-Exeggutor G VineWhip 3 1 BulletSeed 5 0.8 SolarBeam 7 0.6
-Treecko G VineWhip 3 1 EnergyBall 5 0.8 LeafStorm 7 0.6
+Charmander F Ember Flamethrower Inferno
+Magmar F FireSpin Flamethrower Overheat
+Rapidash F Ember Flamethrower FlameCharge
+Flareon F FireSpin Flamethrower FlareBlitz
+Squirtle W WaterGun AquaTail HydroPump
+Gyarados W Whirlpool Waterfall HydroPump
+Golduck W WaterGun Surf HydroPump
+Vaporeon W Whirlpool WaterPulse HydroPump
+Bulbasaur G VineWhip RazorLeaf SolarBeam
+Leafeon G VineWhip LeafBlade LeafStorm
+Exeggutor G VineWhip BulletSeed SolarBeam
+Treecko G VineWhip EnergyBall LeafStorm

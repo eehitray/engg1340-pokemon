@@ -96,7 +96,7 @@ void ScreenRenderer::printBattleScreen(Pokemon playerPokemon, Pokemon opponentPo
 	printLineOnBattleScreen("Moves: ");
 	std::vector<Move> mvset = playerPokemon.getMoveset();
 	printLineOnBattleScreen();
-	for(int i=0; i< mvset.size(); i++)
+	for(int i=0; i< playerPokemon.getNumMoves(); i++)
 	{
 		printLineOnBattleScreen(std::to_string(i) + ". " + mvset[i].name + "  Damage: " + std::to_string(mvset[i].damage));
 	}
