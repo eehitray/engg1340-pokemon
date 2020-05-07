@@ -160,6 +160,15 @@ void ScreenRenderer::printRenderableMap(Map m) {
 }
 
 void ScreenRenderer::printLoadingScreen() {
+	
+	std::ifstream pokemonLogo("pokemon_logo.ans");
+	std::string logoLine;
+
+	while(getline(pokemonLogo, logoLine))
+	{
+		printToScreen(logoLine);
+	}
+
 	std::cout << "Welcome to Pokemon!" << std::endl
 			  << "1. Start game" << std::endl
 			  << "2. Exit game" << std::endl;
