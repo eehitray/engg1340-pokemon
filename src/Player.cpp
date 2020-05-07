@@ -90,6 +90,14 @@ void Player::addXP(ScreenRenderer S, std::vector<int> pokxp)
 	}
 }
 
+void Player::healRoster()
+{
+	for(int i=0;i<roster.size();i++)
+	{
+		roster[i].setHP(roster[i].getMaxHP());
+	}
+}
+
 void Player::writeToFile(std::ofstream& f) {
 	f << pname << std::endl
 	  << r << std::endl

@@ -31,7 +31,7 @@ void MainGame::mainGameLoop() {
 
 	while (inp != 'z') {
 		s.clearScreen();
-		hasMoved = handleMovement(inp, m);
+		hasMoved = handleMovement(inp, m, p, s);
 		s.printRenderableMap(m);
 		s.printToScreen();
 		s.printToScreen();
@@ -46,6 +46,11 @@ void MainGame::mainGameLoop() {
 				initiateBattle(p, Player("", generateRandomSelection({1})), s);
 			}
 		}
+
+		if(m.getTileAtPlayerPos() == 'C' && hasMoved) {
+			s.printToScreen("You have entered the Pokemon Centre, would you like to heal your Pokemon (Press 'h' to heal)");
+		}		
+
 		inp = s.inputCharNoEnter();
 	}
  
@@ -210,7 +215,7 @@ std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) 
 	return return_list;
 }
 
-bool MainGame::handleMovement(char inp, Map& m) {
+bool MainGame::handleMovement(char inp, Map& m, Player& p, ScreenRenderer s) {
 	switch (inp) {
 		case 'w':
 			m.moveUp();
@@ -224,6 +229,12 @@ bool MainGame::handleMovement(char inp, Map& m) {
 		case 'd':
 			m.moveRight();
 			return true;
+		case 'h':
+			p.healRoster();
+			s.printToScreen("Your Pokemon have been healed");
+			s.inputCharNoEnter();
+			return true;
+			
 	}
 
 	return false;
