@@ -1,5 +1,4 @@
 //Pokemon.cpp
-
 #include<string>
 #include "Move.h"
 #include "Pokemon.h"
@@ -12,7 +11,8 @@ Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<std::string> string
 	type = t;
 	currentxp = 0;
 	moveset.push_back({stringset[0],3,1});
-	moveset.push_back({stringset[1],5,0.5});
+	moveset.push_back({stringset[1],5,0.7});
+	moveset.push_back({stringset[2],7,0.5});
 	setLevel(lvl);
 	//add command for 3rd move here
 }
@@ -94,6 +94,10 @@ std::vector<Move> Pokemon::getMoveset()
 	return moveset;
 }
 
+int Pokemon::getNumMoves() {
+	return numMoves;
+}
+
 void Pokemon::setName(std::string n)
 {
 	name = n;
@@ -115,7 +119,9 @@ void Pokemon::setLevel(int lvl)
 	reqxp = level*100;
 	moveset[0].damage = level * 3;
 	moveset[1].damage = level * 5;
-	//moveset[2].damage +=7;
+	moveset[2].damage = level * 7;
+	if (level >= 2) numMoves = 3;
+	else numMoves = 2;
 }
 
 void Pokemon::addXP(ScreenRenderer S,int xp)
@@ -147,7 +153,7 @@ void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
 	S.printToScreen("HP: " + std::to_string(hp));
 	S.printToScreen("XP: " + std::to_string(currentxp));
 	if (printMoves) {
-		for(int i=0;i<moveset.size();i++)
+		for(int i=0;i<numMoves;i++)
 		{
 			S.printToScreen(moveset[i].name + " - Damage: " + std::to_string(moveset[i].damage));
 		}
@@ -192,9 +198,11 @@ void Pokemon::writeToFile(std::ofstream& f) {
 }
 
 void Pokemon::readFromFile(std::ifstream& f) {
+	int tempHp;
+
 	f >> name
 	  >> type
-	  >> hp
+	  >> tempHp
 	  >> maxhp
 	  >> reqxp
 	  >> currentxp
@@ -208,4 +216,7 @@ void Pokemon::readFromFile(std::ifstream& f) {
 		f >> m.name >> m.damage >> m.hit;
 		moveset.push_back(m);
 	}
+
+	setLevel(level);
+	hp = tempHp;
 }
