@@ -107,6 +107,7 @@ void Pokemon::setHP(int HP)
 	hp = HP;
 
 	if (hp < 0) hp = 0;
+	if (hp > maxhp) hp = maxhp;
 }
 
 void Pokemon::setLevel(int lvl)
@@ -147,6 +148,7 @@ void Pokemon::printDetails(ScreenRenderer S, bool printMoves)
 	S.printToScreen("Level: " + std::to_string(level));
 	S.printToScreen("Type: " + std::string(1, type));
 	S.printToScreen("HP: " + std::to_string(hp));
+	S.printToScreen("XP: " + std::to_string(currentxp));
 	if (printMoves) {
 		for(int i=0;i<moveset.size();i++)
 		{

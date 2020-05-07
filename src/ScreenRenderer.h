@@ -20,7 +20,7 @@ class ScreenRenderer {
 		int inputInt(std::string s = "");
 		void printHorizontalBorder();
 		void printBattleScreen(Pokemon playerPokemon, Pokemon opponentPokemon);
-		void printRenderableMap(Map);
+		void printRenderableMap(Map&);
 		void printLoadingScreen();
 };
 #endif

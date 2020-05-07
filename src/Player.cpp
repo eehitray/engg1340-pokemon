@@ -15,6 +15,7 @@ Player::Player(std::string n, std::vector<Pokemon> pok)
 	roster = pok;
 	r = -1;
 	c = -1;
+	level = 0;
 }
 
 Player::Player(std::ifstream& f) {
@@ -39,6 +40,10 @@ int Player::getCol() {
 	return c;
 }
 
+int Player::getLevel() {
+	return level;
+}
+
 void Player::setRow(int newRow) {
 	r = newRow;
 }
@@ -50,6 +55,10 @@ void Player::setCol(int newCol) {
 void Player::setPname(std::string n)
 {
 	pname = n;
+}
+
+void Player::setLevel(int level) {
+	level = level >= 0 ? level : 0;
 }
 
 void Player::addtoRoster(Pokemon pok)
@@ -96,7 +105,8 @@ void Player::addXP(ScreenRenderer S, std::vector<int> pokxp)
 void Player::writeToFile(std::ofstream& f) {
 	f << pname << std::endl
 	  << r << std::endl
-	  << c << std::endl;
+	  << c << std::endl
+	  << level << std::endl;
 	
 	int rosterSize = (int) roster.size();
 
@@ -106,7 +116,7 @@ void Player::writeToFile(std::ofstream& f) {
 }
 
 void Player::readFromFile(std::ifstream& f) {
-	f >> pname >> r >> c;
+	f >> pname >> r >> c >> level;
 
 	int rosterSize;
 
