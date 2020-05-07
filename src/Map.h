@@ -5,6 +5,8 @@
 #include <vector>
 
 class Map {
+	int numTrainers;
+
 	int playerR, playerC;
 	int renderTopBound, renderBottomBound;
 
@@ -15,9 +17,13 @@ class Map {
 	const int renderHeight;
 
 	std::vector<std::vector<char>> map;
+
+	int* trainerRows;
+
 	public:
 
 	Map(std::string, int, int);
+	~Map();
 	char getTileAtPlayerPos();
 	std::vector<std::vector<char>> getRenderableMap();
 	void updateRenderBounds();
@@ -32,6 +38,8 @@ class Map {
 	void moveDown();
 	void moveLeft();
 	void moveRight();
+	bool isBeforeTrainer(int);
+	int getNthTrainer(int);
 };
 
 #endif

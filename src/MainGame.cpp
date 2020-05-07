@@ -31,30 +31,42 @@ void MainGame::mainGameLoop() {
 
 	while (inp != 'z') {
 		s.clearScreen();
-		hasMoved = handleMovement(inp, m);
+		hasMoved = handleInput(inp, m, p, s);
 		s.printRenderableMap(m);
+
 		s.printToScreen();
 		s.printToScreen();
 
-		if (m.getTileAtPlayerPos() == 'G' && hasMoved) {
-			double prob = ((double) rand() / (RAND_MAX));
+		if (m.isBeforeTrainer(p.getLevel())) 
+			s.printToScreen("To proceed further, you must face the area trainer. Are you ready? (y for yes)");
 
-			if (prob < 0.12 && p.hasAlivePokemon()) {
-				s.printToScreen("You encountered a random Pokemon!");
-				s.inputCharNoEnter();
-				s.clearScreen();
-				initiateBattle(p, Player("", generateRandomSelection({1})), s);
-			}
-		}
+		if(m.getTileAtPlayerPos() == 'C' && hasMoved) {
+			s.printToScreen("You have entered the Pokemon Centre, would you like to heal your Pokemon (Press 'h' to heal)");
+		}		
+		
+		randomEncounter(m, p, s, hasMoved);
+
 		inp = s.inputCharNoEnter();
 	}
- 
 
 	//Write to file
 	endGame(p, m, s);
 }
 
-void MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
+void MainGame::randomEncounter(Map& m, Player& p, ScreenRenderer s, bool hasMoved) {
+	if (m.getTileAtPlayerPos() == 'G' && hasMoved) {
+		double prob = ((double) rand() / (RAND_MAX));
+
+		if (prob < 0.12 && p.hasAlivePokemon()) {
+			s.printToScreen("You encountered a random Pokemon!");
+			s.inputCharNoEnter();
+			s.clearScreen();
+			initiateBattle(p, Player("", generateRandomSelection({p.getLevel() + 1})), s);
+		}
+	}
+}
+
+bool MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 	int turn = 0;
 	int i;
 	int moveInd;
@@ -171,10 +183,17 @@ void MainGame::initiateBattle(Player &a, Player b, ScreenRenderer s) {
 
 	a.addXP(s,exp);
 	
+	bool victory = false;
+
 	if (b.hasAlivePokemon()) s.printToScreen("Opponent won!");
-	else s.printToScreen("You won!");
+	else {
+		s.printToScreen("You won!");
+		victory = true;
+	}
 
 	s.inputCharNoEnter("Press any key to continue...");
+
+	return victory;
 }
 
 std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) {
@@ -207,23 +226,80 @@ std::vector<Pokemon> MainGame::generateRandomSelection(std::vector<int> levels) 
 		return_list.push_back(full_list[i]);
 	}
 
+	in.close();
 	return return_list;
 }
 
-bool MainGame::handleMovement(char inp, Map& m) {
+std::string MainGame::getRandomTrainerName() {
+	std::ifstream in;
+	in.open("trainer_names.txt");
+
+	std::vector<std::string> full_list;
+
+	std::string s;
+
+	while (getline(in, s)) {
+		full_list.push_back(s);
+	}
+
+	random_shuffle(full_list.begin(), full_list.end());
+
+	in.close();
+	return full_list[0];
+}
+
+bool MainGame::handleInput(char inp, Map& m, Player& p, ScreenRenderer s) {
 	switch (inp) {
 		case 'w':
 			m.moveUp();
+
+			if (m.getPlayerRow() == m.getNthTrainer(p.getLevel())) m.moveDown();
+
 			return true;
+
 		case 'a':
 			m.moveLeft();
 			return true;
+			
 		case 's':
 			m.moveDown();
 			return true;
+
 		case 'd':
 			m.moveRight();
 			return true;
+			
+		case 'p':
+			s.clearScreen();
+			p.printDetails(s);
+			s.inputCharNoEnter("Press any key to continue.");
+			s.clearScreen();
+			return false;
+
+		case 'y':
+			if (m.isBeforeTrainer(p.getLevel())) {
+				std::string randomTrainerName = getRandomTrainerName();
+				s.printToScreen(randomTrainerName + " challenges you!");
+				s.inputCharNoEnter();
+				s.clearScreen();
+				bool victory = initiateBattle(p, Player(randomTrainerName, generateRandomSelection({p.getLevel() + 1, p.getLevel() + 1, p.getLevel() + 2})), s);
+				if (victory) {
+					s.printToScreen("Congratulations!");
+					p.setLevel(p.getLevel() + 1);
+				}
+				else {
+					s.printToScreen("Better luck next time!");
+				}
+				s.inputCharNoEnter();
+			}	
+			return false;
+
+		case 'h':
+			p.healRoster();
+			s.printToScreen("Your Pokemon have been healed");
+			s.inputCharNoEnter();
+			return true;
+			
 	}
 
 	return false;
@@ -250,7 +326,7 @@ Player MainGame::startGame(ScreenRenderer s) {
 	return Player(name, generateRandomSelection({1, 1, 2}));
 }
 
-void MainGame::endGame(Player& p, Map m, ScreenRenderer s) {
+void MainGame::endGame(Player& p, Map& m, ScreenRenderer s) {
 	p.setRow(m.getPlayerRow());
 	p.setCol(m.getPlayerCol());
 

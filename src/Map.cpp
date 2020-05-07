@@ -12,6 +12,12 @@ Map::Map(std::string file, int r, int c) : width(40), renderHeight(41) {
 	
 	if (f) {
 		f >> height;
+		f >> numTrainers;
+
+		trainerRows = new int[numTrainers];
+
+		for (int i = 0; i < numTrainers; i++) f >> trainerRows[i];
+
 		f >> playerR >> playerC;
 
 		while(getline(f, temp)) {
@@ -29,6 +35,10 @@ Map::Map(std::string file, int r, int c) : width(40), renderHeight(41) {
 	f.close();
 
 	updateRenderBounds();
+}
+
+Map::~Map() {
+	delete[] trainerRows;
 }
 
 char Map::getTileAtPlayerPos() {
@@ -58,6 +68,7 @@ void Map::updateRenderBounds() {
 		renderTopBound = height - renderHeight + 1;
 	}
 }
+
 int Map::getRenderWidth() {
 	return width;
 }
@@ -98,6 +109,7 @@ void Map::moveUp() {
 	setPlayerRow(playerR - 1);
 }
 
+
 void Map::moveDown() {
 	setPlayerRow(playerR + 1);
 }
@@ -108,4 +120,16 @@ void Map::moveLeft() {
 
 void Map::moveRight() {
 	setPlayerCol(playerC + 1);
+}
+
+bool Map::isBeforeTrainer(int playerLevel) {
+	for (int i = playerLevel; i < numTrainers; i++) {
+		if (playerR - 1 == trainerRows[i]) return true;
+	}
+
+	return false;
+}
+
+int Map::getNthTrainer(int level) {
+	return trainerRows[level];
 }

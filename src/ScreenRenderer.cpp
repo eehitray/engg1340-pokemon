@@ -142,7 +142,7 @@ void ScreenRenderer::printBattleScreen(Pokemon playerPokemon, Pokemon opponentPo
 	printLineOnBattleScreen();
 }
 
-void ScreenRenderer::printRenderableMap(Map m) {
+void ScreenRenderer::printRenderableMap(Map& m) {
 	std::vector<std::vector<char>> renderableMap = m.getRenderableMap();
 	int playerR = m.getPlayerRenderRow();
 	int playerC = m.getPlayerCol();
