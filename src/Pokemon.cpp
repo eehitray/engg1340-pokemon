@@ -10,13 +10,10 @@
 Pokemon::Pokemon(std::string n, char t, int lvl, std::vector<std::string> stringset)
 {	name = n;
 	type = t;
-	level = lvl;
-	maxhp = lvl*10;
-	hp = maxhp;
-	reqxp = lvl*100;
 	currentxp = 0;
 	moveset.push_back({stringset[0],3,1});
 	moveset.push_back({stringset[1],5,0.5});
+	setLevel(lvl);
 	//add command for 3rd move here
 }
 
@@ -66,28 +63,28 @@ std::vector<Move> Pokemon::getFinalDamage(char t)
 	{
 		if(t=='W')
 			for(int i=0;i<mvset.size();i++)
-				mvset[i].damage -=1;
+				mvset[i].damage -= level;
 		else if(t=='G')
 			for(int i=0;i<mvset.size();i++)
-				mvset[i].damage +=1;
+				mvset[i].damage += level;
 	}
 	else if(type=='W')
 	{
 		if(t=='F')
 			for(int i=0;i<mvset.size();i++)
-				mvset[i].damage +=1;
+				mvset[i].damage += level;
 		else if(t=='G')
 			for(int i=0;i<mvset.size();i++)
-				mvset[i].damage -=1;
+				mvset[i].damage -= level;
 	}
 	else
 	{
 		if(t=='F')
 			for(int i=0;i<mvset.size();i++)
-				mvset[i].damage -=1;
+				mvset[i].damage -= level;
 		else if(t=='W')
 			for(int i=0;i<mvset.size();i++)
-				mvset[i].damage +=1;
+				mvset[i].damage += level;
 	}
 	return mvset;
 }
@@ -116,8 +113,8 @@ void Pokemon::setLevel(int lvl)
 	maxhp = level*10;
 	hp = maxhp;
 	reqxp = level*100;
-	moveset[0].damage += (level - 1) * 3;
-	moveset[1].damage += (level - 1) * 5;
+	moveset[0].damage = level * 3;
+	moveset[1].damage = level * 5;
 	//moveset[2].damage +=7;
 }
 
