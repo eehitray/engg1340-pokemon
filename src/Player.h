@@ -35,6 +35,7 @@ class Player
 	bool hasAlivePokemon();
 	void printDetails(ScreenRenderer S);
 	void addXP(ScreenRenderer S, std::vector<int> pokxp);
+	void healRoster();
 	void writeToFile(std::ofstream&);
 	void readFromFile(std::ifstream&);
 };

@@ -57,8 +57,8 @@ void Player::setPname(std::string n)
 	pname = n;
 }
 
-void Player::setLevel(int level) {
-	level = level >= 0 ? level : 0;
+void Player::setLevel(int lvl) {
+	level = lvl >= 0 ? lvl : 0;
 }
 
 void Player::addtoRoster(Pokemon pok)
@@ -99,6 +99,14 @@ void Player::addXP(ScreenRenderer S, std::vector<int> pokxp)
 	{
 		if(pokxp[i]!=0)
 			roster[i].addXP(S, pokxp[i]);
+	}
+}
+
+void Player::healRoster()
+{
+	for(int i=0;i<roster.size();i++)
+	{
+		roster[i].setHP(roster[i].getMaxHP());
 	}
 }
 

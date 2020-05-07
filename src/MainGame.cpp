@@ -40,6 +40,10 @@ void MainGame::mainGameLoop() {
 		if (m.isBeforeTrainer(p.getLevel())) 
 			s.printToScreen("To proceed further, you must face the area trainer. Are you ready? (y for yes)");
 
+		if(m.getTileAtPlayerPos() == 'C' && hasMoved) {
+			s.printToScreen("You have entered the Pokemon Centre, would you like to heal your Pokemon (Press 'h' to heal)");
+		}		
+		
 		randomEncounter(m, p, s, hasMoved);
 
 		inp = s.inputCharNoEnter();
@@ -264,7 +268,7 @@ bool MainGame::handleInput(char inp, Map& m, Player& p, ScreenRenderer s) {
 		case 'd':
 			m.moveRight();
 			return true;
-
+			
 		case 'p':
 			s.clearScreen();
 			p.printDetails(s);
@@ -289,6 +293,13 @@ bool MainGame::handleInput(char inp, Map& m, Player& p, ScreenRenderer s) {
 				s.inputCharNoEnter();
 			}	
 			return false;
+
+		case 'h':
+			p.healRoster();
+			s.printToScreen("Your Pokemon have been healed");
+			s.inputCharNoEnter();
+			return true;
+			
 	}
 
 	return false;
