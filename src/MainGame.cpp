@@ -61,7 +61,7 @@ void MainGame::randomEncounter(Map& m, Player& p, ScreenRenderer s, bool hasMove
 			s.printToScreen("You encountered a random Pokemon!");
 			s.inputCharNoEnter();
 			s.clearScreen();
-			initiateBattle(p, Player("", generateRandomSelection({p.getLevel() + 1})), s);
+			initiateBattle(p, Player("", generateRandomSelection({m.getBasePokemonLevel()})), s);
 		}
 	}
 }
@@ -282,7 +282,7 @@ bool MainGame::handleInput(char inp, Map& m, Player& p, ScreenRenderer s) {
 				s.printToScreen(randomTrainerName + " challenges you!");
 				s.inputCharNoEnter();
 				s.clearScreen();
-				bool victory = initiateBattle(p, Player(randomTrainerName, generateRandomSelection({p.getLevel() + 1, p.getLevel() + 1, p.getLevel() + 2})), s);
+				bool victory = initiateBattle(p, Player(randomTrainerName, generateRandomSelection({m.getBasePokemonLevel(), m.getBasePokemonLevel(), m.getBasePokemonLevel() + 1})), s);
 				if (victory) {
 					s.printToScreen("Congratulations!");
 					p.setLevel(p.getLevel() + 1);

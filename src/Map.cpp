@@ -133,3 +133,10 @@ bool Map::isBeforeTrainer(int playerLevel) {
 int Map::getNthTrainer(int level) {
 	return trainerRows[level];
 }
+
+int Map::getBasePokemonLevel() {
+	for (int i = 0; i < numTrainers; i++)
+		if (playerR >= trainerRows[i] - 1) return 2 * i + 1;
+
+	return 2 * numTrainers + 1;
+}
