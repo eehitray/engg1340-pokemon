@@ -38,7 +38,7 @@ void MainGame::mainGameLoop() {
 		s.printToScreen();
 
 		if (m.isBeforeTrainer(p.getLevel())) 
-			s.printToScreen("To proceed further, you must face the area trainer. Are you ready? (y for yes)");
+			s.printToScreen("To proceed further, you must face the area trainer. Are you ready? (b for yes)");
 
 		if(m.getTileAtPlayerPos() == 'C' && hasMoved) {
 			s.printToScreen("You have entered the Pokemon Centre, would you like to heal your Pokemon (Press 'h' to heal)");
@@ -277,7 +277,7 @@ bool MainGame::handleInput(char inp, Map& m, Player& p, ScreenRenderer s) {
 			s.clearScreen();
 			return false;
 
-		case 'y':
+		case 'b':
 			if (m.isBeforeTrainer(p.getLevel())) {
 				std::string randomTrainerName = getRandomTrainerName();
 				s.printToScreen(randomTrainerName + " challenges you!");
