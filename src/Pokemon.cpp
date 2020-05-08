@@ -276,6 +276,8 @@ void Pokemon::addXP(ScreenRenderer S,int xp)
 			setLevel( getLevel() + 1); 
 
 			S.printToScreen(name + " levelled up!");
+
+			if (getLevel() == 2) S.printToScreen(name + " learned a new move!");
 		}
 	}
 }
