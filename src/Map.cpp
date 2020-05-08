@@ -140,3 +140,7 @@ int Map::getBasePokemonLevel() {
 
 	return 2 * numTrainers + 1;
 }
+
+int Map::getNumTrainers() {
+	return numTrainers;
+}

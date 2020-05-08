@@ -41,6 +41,7 @@ class Map {
 	bool isBeforeTrainer(int);
 	int getNthTrainer(int);
 	int getBasePokemonLevel();
+	int getNumTrainers();
 };
 
 #endif

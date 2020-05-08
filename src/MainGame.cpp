@@ -287,19 +287,27 @@ bool MainGame::handleInput(char inp, Map& m, Player& p, ScreenRenderer s) {
 				if (victory) {
 					s.printToScreen("Congratulations!");
 					p.setLevel(p.getLevel() + 1);
+					if (p.getLevel() == m.getNumTrainers()) {
+						s.printToScreen("You have beaten the game!");
+						s.printToScreen("Feel free to roam around and play the game as long as you want.");
+					}
 				}
 				else {
 					s.printToScreen("Better luck next time!");
 				}
 				s.inputCharNoEnter();
+				s.clearScreen();
 			}	
 			return false;
 
 		case 'h':
-			p.healRoster();
-			s.printToScreen("Your Pokemon have been healed");
-			s.inputCharNoEnter();
-			return true;
+			if(m.getTileAtPlayerPos() == 'C') {
+				p.healRoster();
+				s.printToScreen("Your Pokemon have been healed!");
+				s.inputCharNoEnter();
+				s.clearScreen();
+			}	
+			return false;
 			
 	}
 
