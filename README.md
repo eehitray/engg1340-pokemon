@@ -4,6 +4,8 @@
 ### Eehit Ray - 3035665122
 ### Dhruv Aggarwal - 3035663150
 
+Gameplay video link: https://drive.google.com/open?id=1lGBFBL5esh7TYzKJPLvIltGmG_rdbjOB
+
 Our version of **Pokémon** is a text-based game, where the user's goal is to become the regional Pokémon Champion.
 The game is based on the famous anime/game Pokémon.
 The player begins the game with 3 pokémon, and travels through the map, battling other trainers, exploring the new world and fighting pokémon so as to train and level up his/her own Pokémon. He ultimtely battles out the region's champion for the coveted position of Pokémon Champion.
