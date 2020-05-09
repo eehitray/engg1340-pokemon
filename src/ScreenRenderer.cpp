@@ -42,13 +42,24 @@ void ScreenRenderer::printToScreen(std::string s) {
 	std::cout << s << std::endl;
 }
 
+/*
+   To regulatetted printing on Battle Screen
+
+   Parameters:
+   string s1 - string to be printed on left side of screen
+   string s2 - string to be printed on right side of screen
+   int spaceWidth - integer storing the number of spaces between s1 and s2
+   bool longBorder - true if extra spaces need to be printed before printing vertical border, false if extra spaces don't have to be printed for vertical border
+*/
 void ScreenRenderer::printLineOnBattleScreen(std::string s1, std::string s2, int spaceWidth, bool longBorder) {
 	std::cout<<std::left<<std::setw(80)<< s1;
 	for(int i=0;i< spaceWidth; i++)
 		std::cout<<" ";
 	std::cout<< std::left << std::setw(80) << s2;
+	//in case string of image file is printed, then extra spaces need to be printed
 	if(longBorder == true)
 		std::cout<< std::right << std::setw(21) << "|" << std::endl;
+	
 	else
 		std::cout<< std::right << "|" << std::endl;
 }
@@ -119,17 +130,31 @@ int ScreenRenderer::inputInt(std::string s) {
     return input;	
 }
 
+/*
+   Print horizontal border of '-'
+*/
 void ScreenRenderer::printHorizontalBorder() {
 	for(int i=0;i<171;i++)
 		std::cout<<"-";
 	std::cout<<std::endl;
 }
 
+
+/*
+   To print battle details and pokemon artwork during battle
+
+   Parameters:
+   Pokemon playerPokemon - Pokemon instance of player's current pokemon
+   Pokemon opponentPokemon - Pokemon instance of opponent's current Pokemon
+*/
 void ScreenRenderer::printBattleScreen(Pokemon playerPokemon, Pokemon opponentPokemon)
 {
+	//spaces to be printed between strings when pokemon information is being printed
 	int spaceWidthInfo = 10;
+	//spaces to be printed between strings when string from pokemon artowrk file is being printed
 	int spaceWidthImage = 30;
 
+	//Number of lines in artwork files of player and opponent's pokemon
 	int playerPokemonFileLines = 0, opponentPokemonFileLines = 0;
 
 	std::ifstream playerPokemonImage, opponentPokemonImage;
@@ -138,15 +163,19 @@ void ScreenRenderer::printBattleScreen(Pokemon playerPokemon, Pokemon opponentPo
 	std::string playerPokemonFile = playerPokemon.getName() + ".txt";
 	std::string opponentPokemonFile = opponentPokemon.getName() + ".txt";
 
+	//linking input streams to pokemon artwork files
 	playerPokemonImage.open(playerPokemonFile);
 	opponentPokemonImage.open(opponentPokemonFile);
 
+	//printing basic details for player's reference
 	printLineOnBattleScreen(playerPokemon.getName(), opponentPokemon.getName(), spaceWidthInfo);
 	printLineOnBattleScreen("Level: " + std::to_string(playerPokemon.getLevel()), "Level: " + std::to_string(opponentPokemon.getLevel()), spaceWidthInfo);
 	printLineOnBattleScreen("Type: " + std::string(1,playerPokemon.getType()),"Type: " + std::string(1,opponentPokemon.getType()), spaceWidthInfo);
 	printLineOnBattleScreen("HP: " + std::to_string(playerPokemon.getHP()), "HP: " + std::to_string(opponentPokemon.getHP()), spaceWidthInfo);
 
 	printLineOnBattleScreen();
+
+	//printing player's pokemon's moves
 	printLineOnBattleScreen("Moves: ");
 	std::vector<Move> mvset = playerPokemon.getMoveset();
 	printLineOnBattleScreen();
@@ -167,6 +196,7 @@ void ScreenRenderer::printBattleScreen(Pokemon playerPokemon, Pokemon opponentPo
 	opponentPokemonImage.clear();
 	opponentPokemonImage.seekg(0,std::ios::beg);
 
+	//if one artwork file has more number of lines, then print extra lines of bigger image first
 	if(playerPokemonFileLines > opponentPokemonFileLines)
 	{
 		for(int i=0;i< playerPokemonFileLines - opponentPokemonFileLines; i++)
@@ -184,6 +214,7 @@ void ScreenRenderer::printBattleScreen(Pokemon playerPokemon, Pokemon opponentPo
 		}
 	}
 
+	//print both images completely
 	while(getline(playerPokemonImage,tempPlayer) && getline(opponentPokemonImage,tempOpponent))
 	{
 		printLineOnBattleScreen(tempPlayer, tempOpponent, spaceWidthImage, true);
@@ -228,14 +259,18 @@ void ScreenRenderer::printRenderableMap(Map& m) {
 	}
 }
 
+/*
+   Print screen to start game for user
+*/
 void ScreenRenderer::printLoadingScreen() {
-	
+
 	std::ifstream pokemonLogo("pokemon_logo.ans");
 	std::string logoLine;
 
+	//printing each line of Pokemon logo
 	while(getline(pokemonLogo, logoLine))
 	{
-		printToScreen(logoLine);
+		printToScreen(logoLine); 
 	}
 
 	std::cout << "Welcome to Pokemon!" << std::endl
