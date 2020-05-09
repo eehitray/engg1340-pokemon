@@ -23,7 +23,7 @@ class Player
 	//integers storing row and column position of Player on map
 	int r, c;
 
-	//integer storing level of Player based on his 
+	//integer storing level of Player, indicating how many trainers the player has beaten 
 	int level;
 
 	public:
