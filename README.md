@@ -10,28 +10,28 @@ The player begins the game with 3 pokémon, and travels through the map, battlin
 
 **Game Rules**
 1. The player starts the game and enters his name. 
-2. The Player begins with 2 random Pokemon of level 1 and 1 random Pokemon of level 2. It is level that determines the base damage of the moves (attacks) the pokémon possesses as well as its hp (health points). The player battles other pokémon and trainers to gain experience points and level up his own pokémon, so that they become stonger. As the pokemon levels up, it has to gain more experience points to reach the next level.
-	- Upon reaching level 2, a Pokemon learns a new move.
-3. As you progress through the map, the level of difficulty increases with stronger pokémon appearing. Within the map you will encounter grass areas where you will have battles with wild (random) pokémon.
+2. The player begins with 2 random pokemon of level 1 and 1 random pokemon of level 2. It is level that determines the base damage of the moves (attacks) the pokemon possesses as well as its hp (health points). The player battles other pokemon and trainers to gain experience points and level up his own pokemon, so that they become stonger. As the pokemon levels up, it has to gain more experience points to reach the next level.
+	- Upon reaching level 2, a pokemon learns a new move.
+3. As you progress through the map, the level of difficulty increases with stronger pokemon appearing. Within the map you will encounter grass areas where you will have battles with wild (random) pokemon.
 	- Colours on the map are as follows :
-		- Green: Grass areas where wild Pokemon are encountered.
-		- Yellow: Roads where no Pokemon are encountered.
-		- Red: Pokemon centre, where you can replenish your Pokemons' health.
+		- Green: Grass areas where wild pokemon are encountered.
+		- Yellow: Roads where no pokemon are encountered.
+		- Red: Pokemon centre, where you can replenish your pokemons' health.
 	- Your objective is to move upwards in the map where you will encounter trainers and finally the regional champion.
 	- The map is divided into 3 sections by trainers. In order to proceed to the next section, the player must defeat the trainer for that section. The 3rd trainer is the regional champion.
 	- Once a trainer has been defeated, he does not need to be battled again.
 4. The Pokemon battle system works as follows :
-	- The player sees his Pokémon and their respective moves, HP (health points), type & level, as well his opponent's pokémon and their HP, type & level.  
-	- The player can either choose to execute a move of his current Pokemon or switch to a different Pokemon.
-	- The effectiveness of the move depends on your Pokémon's level, type and the type of Pokémon being battled.
-	- Fire Pokemon have an advantage over Grass Pokemon. Similarly, Water Pokemon have an advantage over Fire and Grass Pokemon have an advantage over Water Pokemon.
+	- The player sees his pokemon and their respective moves, HP (health points), type & level, as well his opponent's pokemon and their HP, type & level.  
+	- The player can either choose to execute a move of his current pokemon or switch to a different pokemon.
+	- The effectiveness of the move depends on your pokemon's level, type and the type of Pokémon being battled.
+	- Fire pokemon have an advantage over Grass pokemon. Similarly, Water pokemon have an advantage over Fire and Grass pokemon have an advantage over Water pokemon.
 	- The probability of the move hitting decreases as the strength of the move increases.
-	- The objective is to ensure you knock out the opponent's Pokémon by making the Pokémon HP 0. By doing so, you would even gain experience points for your Pokémon.
-	- If your Pokémon faints, you have to switch out your current Pokémon for another.
-	- Wild Pokémon appear individually, and trainers have a set of 3 Pokémon each. 
-	- The battle ends when either party has all Pokémon at HP 0.
-5. To heal your hurt Pokémon you can approach Pokémon centres (red tiles) that are located at specific places on the map.
-6. You can also check your Pokémon details such as HP, level etc, at any time.
+	- The objective is to ensure you knock out the opponent's pokemon by making the pokemon HP 0. By doing so, you would even gain experience points for your pokemon.
+	- If your pokemon faints, you have to switch out your current pokemon for another.
+	- Wild pokemon appear individually, and trainers have a set of 3 pokemon each. 
+	- The battle ends when either party has all pokemon at HP 0.
+5. To heal your hurt pokemon you can approach pokemon centres (red tiles) that are located at specific places on the map.
+6. You can also check your pokemon details such as HP, level etc, at any time.
 7. If you feel like taking a break you can save and exit the game, and carry on with your previous progress later on.
 	- The game gets saved with your player name as the filename.
 	- On starting the game again, you can load your saved file by entering the player name you had used earlier (see point 1).
@@ -56,18 +56,18 @@ The player begins the game with 3 pokémon, and travels through the map, battlin
 	- Press z to save and exit the game.
 4. Battle Controls:
 	- Press 0, 1 or 2 to execute the corresponding move of your Pokemon.
-	- Press s to switch your Pokemon. 
-		- When prompted to switch Pokemon, press 0, 1 or 2 to switch to the corresponding Pokemon.
-		- You cannot switch to Pokemon that have fainted.
+	- Press s to switch your pokemon. 
+		- When prompted to switch pokemon, press 0, 1 or 2 to switch to the corresponding pokemon.
+		- You cannot switch to pokemon that have fainted.
 5. Other Screens:
 	- Press any key to continue when faced with descriptive screens such as that on healing of pokemon, defeat of trainer etc.
 
 **Features and Functions vis-a-vis given code requirements**
 1. Generation of random game sets or events:
 	- The pokemon that the player starts with are randomly generated.
-	- The Pokémon that appear in the wild will be generated by random from a list of Pokémon created by us.
-	- The Pokémon that trainers have as well as trainer names will be generated randomly.
-	- The moves an opponent Pokémon plays, will be genereated randomly.
+	- The pokemon that appear in the wild will be generated by random from a list of Pokemon created by us.
+	- The pokemon that trainers have as well as trainer names will be generated randomly.
+	- The moves an opponent pokemon plays, will be genereated randomly.
 	- The probability of a move hitting also depends on chance. Probabiltiy of hit decreases with strength of move.
 2. Data structures for storing game status:
 	- The player is represented using a `Player` class whose data members are
@@ -83,7 +83,7 @@ The player begins the game with 3 pokémon, and travels through the map, battlin
 		- pokemon current experience and required experience to level up
 		- number of moves the pokemon has
 		- set of moves of a pokemon
-	- The move of a Pokémon is defined as a structure called `Move` with elements name, damage and hit (probability of move being successful).
+	- The move of a pokemon is defined as a structure called `Move` with elements name, damage and hit (probability of move being successful).
 	- There are also utility classes for making core game functions easier, such as MainGame (for running the all core game functions), ScreenRenderer (for printing to the screen and taking input) and Map (to represent the in-game map) etc.
 3. Dynamic memory management: 
 	- Vectors are used throughout the program. E.g. storing the moves of a pokemon, storing the pokemon a player has.
