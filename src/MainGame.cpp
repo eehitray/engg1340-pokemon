@@ -97,7 +97,7 @@ void MainGame::randomEncounter(Map& m, Player& p, ScreenRenderer s, bool hasMove
 }
 
 /*
- * Run throguh a battle between two players.
+ * Run through a battle between two players.
  *
  * Parameters:
  * Player& a - the user Player
