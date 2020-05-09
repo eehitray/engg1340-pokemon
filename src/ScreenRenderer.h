@@ -7,20 +7,43 @@
 
 class Map;
 
+//Class for all screen printing and input related functions
 class ScreenRenderer {
+	//Map to store each character in the map text file and its corresponding colour to be printed
 	std::map<char, std::string> colorCharMap;
 
 	public:
+		//Constructor for ScreenRenderer. Maps the various tiles to their colour codes.
 		ScreenRenderer();
+	
+		//Clears the screen.
 		void clearScreen();
+
+		//Prints a line to the screen.
 		void printToScreen(std::string s = "");
+
+		//
 		void printLineOnBattleScreen(std::string s1 = "", std::string s2 = "", int setw_arg = 10, bool longBorder = false);
+	
+		//Inputs a character from the user in a non-blocking way.
 		char inputCharNoEnter(std::string s = "");
+
+		//Inputs a string from the user.
 		std::string inputString(std::string s = "");
+
+		//Inputs an int from the user.
 		int inputInt(std::string s = "");
+		
+		//
 		void printHorizontalBorder();
+
+		//
 		void printBattleScreen(Pokemon playerPokemon, Pokemon opponentPokemon);
+
+		//Prints the renderable section of the map (see Map.cpp for details).
 		void printRenderableMap(Map&);
+
+		//
 		void printLoadingScreen();
 };
 #endif
